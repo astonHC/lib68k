@@ -1,0 +1,13 @@
+/* COPYRIHGT (C) HARRY CLARK 2024 */
+
+/* MOTOROLA 68000 STANDALONE EMULATION LIBRARY */
+
+/* THIS FILE PERTAINS TOWARDS THE MAIN FUNCTIONALITY OF THE PROGRAM */
+
+#include <stdio.h>
+
+int main(void)
+{
+    fprintf(stdout, "HARRY CLARK - 68K LIBRARY");
+    return 0;
+}
