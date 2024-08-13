@@ -85,9 +85,14 @@
 #define         M68K_IRQ_6                  6
 #define         M68K_IRQ_7                  7
 
+#define			M68K_LOW_BITMASK		8*7
+#define			M68K_MID_BITMASK		16*7
+#define			M68K_HIGH_BITMASK		24*7
+#define 		M68K_MAX_BITMASK		32*7
+
 typedef struct CPU_68K
 {
-    unsigned int PC;
+    unsigned int* PC;
     unsigned int* INSTRUCTION_CYCLES;
     unsigned int* CYCLE_RATE;
     unsigned char* MEMORY_BASE;
@@ -164,6 +169,39 @@ typedef struct CPU_68K
 
 } CPU_68K;
 
+typedef enum CPU_68K_REGS
+{
+	M68K_REG_TYPE,
+    M68K_D0 = 0,    
+    M68K_D1 = 1,
+    M68K_D2 = 2,
+    M68K_D3 = 3,
+    M68K_D4 = 4,
+    M68K_D5 = 5,
+    M68K_D6 = 6,
+    M68K_D7 = 7,
+    M68K_A0 = 8,    
+    M68K_A1 = 9,
+    M68K_A2 = 10,
+    M68K_A3 = 11,
+    M68K_A4 = 12,
+    M68K_A5 = 13,
+    M68K_A6 = 14,
+    M68K_A7 = 15,
+    M68K_PC,    
+    M68K_SR,    
+    M68K_SP,    
+    M68K_USP,   
+    M68K_ISP,
+    M68K_IR, 
+	M68K_SFC,
+	M68K_VBR,
+	M68K_DFC,
+	M68K_CACR,
+	M68K_CAAR,
+
+} CPU_68K_REGS;
+
 typedef struct CPU_68K_MEMORY
 {
     unsigned(*MEMORY_BASE);
@@ -233,6 +271,12 @@ typedef enum CPU_68K_FLAGS
 #define         M68K_SET_FC_ACK         CPU->SET_FC_CALLBACK
 #define         M68K_INSTR_HOOK         CPU->INSTR_HOOK
 
+
+/*===============================================================================*/
+/*							68000 MAIN CPU FUNCTIONALIY							 */
+/*===============================================================================*/
+
+U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER);
 
 /*===============================================================================*/
 /*							        68000 MISC.							         */
