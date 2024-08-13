@@ -159,6 +159,12 @@ typedef struct CPU_68K
 	unsigned* T0_FLAG;
 	unsigned* T1_FLAG;
 
+    int(*INT_ACK_CALLBACK)(int VALUE);
+    void(*RESET_CALLBACK)(void);
+    void(*PC_CHANGED_CALLBACK)(unsigned* NEW_PC);
+    void(*SET_FC_CALLBACK)(unsigned* NEW_FC);
+    void(*INSTR_HOOK)(unsigned* PC);
+
     CPU_68K_MEMORY MEMORY_MAP[256];
 
 } CPU_68K;
