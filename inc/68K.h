@@ -103,32 +103,27 @@ typedef struct CPU_68K
 
 	unsigned int* STOPPED;
 
-    union REGISTERS
-    {
-        U16* STATUS_REGISTER;
-	    U32* INDEX_REGISTER;
-        U32* REGISTER_BASE[16];
-	    U32* DATA_REGISTER[8];
-	    U32* ADDRESS_REGISTER[8];
-        U32* PREVIOUS_PC;
-        U32* STACK_POINTER;
-	    U32* INTERRUPT_SP;
-	    U32* MASTER_SP;
-	    U32* USER_STACK;
-	    U32* ADDRESS_STACK_POINTER;
-        U32* INSTRUCTION_REGISTER;
-	    U32* SOURCE_FUNCTION_COUNTER;
-	    U32* DEST_FUNCTION_COUNTER;
-	    U32* VBR;
-	    U32* FPR[8];
-	    U32* FPIAR;
-	    U32* FPCR;
-	    U32* FPSR;
-	    U32* CACHE_CONTROL;
-	    U32* CACHE_ADDRESS;
-
-    } REGISTERS;
-
+    U16* STATUS_REGISTER;
+	U32* INDEX_REGISTER;
+    U32* REGISTER_BASE[16];
+	U32* DATA_REGISTER[8];
+	U32* ADDRESS_REGISTER[8];
+    U32* PREVIOUS_PC;
+    U32* STACK_POINTER;
+	U32* INTERRUPT_SP;
+	U32* MASTER_SP;
+	U32* USER_STACK;
+	U32* ADDRESS_STACK_POINTER;
+    U32* INSTRUCTION_REGISTER;
+	U32* SOURCE_FUNCTION_COUNTER;
+	U32* DEST_FUNCTION_COUNTER;
+	U32* VBR;
+	U32* FPR[8];
+	U32* FPIAR;
+	U32* FPCR;
+	U32* FPSR;
+	U32* CACHE_CONTROL;
+	U32* CACHE_ADDRESS;
 
     char* INSTRUCTION_MODE;
     char* TRACE_FLAG;
@@ -180,9 +175,71 @@ typedef struct CPU_68K_MEMORY
 
 } CPU_68K_MEMORY;
 
+typedef enum CPU_68K_FLAGS 
+{
+    FLAG_S,
+    FLAG_X,
+    FLAG_Z,
+    FLAG_N,
+    FLAG_C,
+    FLAG_V,
+	FLAG_T0,
+    FLAG_T1,
+	FLAG_M
 
-extern CPU_68K* M68K;
-extern CPU_68K_MEMORY* M68K_MEMORY;
+} CPU_68K_FLAGS;
+
+
+#define 		M68K_REG_DA				CPU->DATA_REGISTER
+#define			M68K_REG_D				CPU->DATA_REGISTER
+#define			M68K_REG_A				(CPU->DATA_REGISTER + 8)
+#define			M68K_REG_SR				CPU->STATUS_REGISTER
+#define			M68K_REG_PPC			CPU->PREVIOUS_PC
+#define			M68K_REG_PC				CPU->PC
+#define			M68K_REG_SP				CPU->STACK_POINTER
+#define			M68K_REG_USP			CPU->USER_STACK[0]
+#define			M68K_REG_ISP			CPU->INTERRUPT_SP[4]
+#define			M68K_REG_MSP			CPU->MASTER_SP[6]
+#define			M68K_REG_SP_FULL		CPU->REGISTER_BASE[15]
+#define			M68K_REG_VBR			CPU->VBR
+#define			M68K_REG_SFC			CPU->SOURCE_FUNCTION_COUNTER
+#define			M68K_REG_DFC			CPU->DEST_FUNCTION_COUNTER
+#define			M68K_REG_CACR			CPU->CACHE_CONTROL
+#define			M68K_REG_CAAR			CPU->CACHE_ADDRESS
+#define			M68K_REG_IR				CPU->INDEX_REGISTER
+#define 		M68K_REG_FPR			CPU->FPR
+#define			M68K_REG_FPCR			CPU->FPCR
+#define			M68K_REG_FPSR			CPU->FPSR
+#define			M68K_REG_FPIAR			CPU->FPIAR
+
+#define  		M68K_FLAG_T0			CPU->T0_FLAG
+#define			M68K_FLAG_T1			CPU->T1_FLAG
+#define			M68K_FLAG_S				CPU->S_FLAG
+#define			M68K_FLAG_M				CPU->M_FLAG
+#define			M68K_FLAG_X				CPU->X_FLAG
+#define			M68K_FLAG_N				CPU->N_FLAG
+#define			M68K_FLAG_Z				CPU->Z_FLAG
+#define			M68K_FLAG_V				CPU->V_FLAG
+#define			M68K_FLAG_C				CPU->C_FLAG
+#define			M68K_FLAG_INT_LVL		CPU->INT_LEVEL
+#define			M68K_CPU_STOPPED		CPU->CPU_STOPPED
+
+#define			M68K_CYC_EXCE			CPU->CYCLE_EXCEPTION
+#define 		M68K_CYCLE				CPU->INSTRUCTION_CYCLES[16]
+
+#define         M68K_INT_ACK            CPU->INT_ACK_CALLBACK
+#define         M68K_RESET_ACK          CPU->RESET_CALLBACK
+#define         M68K_PC_CHANGED         CPU->PC_CHANGED_CALLBACK
+#define         M68K_SET_FC_ACK         CPU->SET_FC_CALLBACK
+#define         M68K_INSTR_HOOK         CPU->INSTR_HOOK
+
+
+/*===============================================================================*/
+/*							        68000 MISC.							         */
+/*===============================================================================*/
+
+extern CPU_68K* CPU;
+extern CPU_68K_MEMORY* CPU_MEMORY;
 
 #endif
 #endif
