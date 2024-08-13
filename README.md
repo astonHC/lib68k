@@ -19,6 +19,8 @@ make clean
 make
 ```
 
+the following output should be a file called ``lib68k.a``
+
  # Sources:
 
 [Motorola 680x0 Programmer Manual](https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf)
