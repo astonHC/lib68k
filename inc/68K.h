@@ -76,5 +76,107 @@
 #define         M68K_CPU_030                3
 #define         M68K_CPU_040                4
 
+#define         M68K_IRQ_NONE               0
+#define         M68K_IRQ_1                  1
+#define         M68K_IRQ_2                  2
+#define         M68K_IRQ_3                  3
+#define         M68K_IRQ_4                  4
+#define         M68K_IRQ_5                  5
+#define         M68K_IRQ_6                  6
+#define         M68K_IRQ_7                  7
+
+typedef struct CPU_68K
+{
+    unsigned int PC;
+    unsigned int* INSTRUCTION_CYCLES;
+    unsigned int* CYCLE_RATE;
+    unsigned char* MEMORY_BASE;
+    unsigned int** CYCLE_EXCEPTION;
+
+    unsigned(*MEMORY_DATA);
+    unsigned(*MEMORY_ADDRESS);
+    unsigned(*MEMORY_POINTER);
+
+	unsigned(*LOW_ADDR);
+	unsigned(*HIGH_ADDR);
+	void(*USER_DATA);
+
+	unsigned int* STOPPED;
+
+    union REGISTERS
+    {
+        U16* STATUS_REGISTER;
+	    U32* INDEX_REGISTER;
+        U32* REGISTER_BASE[16];
+	    U32* DATA_REGISTER[8];
+	    U32* ADDRESS_REGISTER[8];
+        U32* PREVIOUS_PC;
+        U32* STACK_POINTER;
+	    U32* INTERRUPT_SP;
+	    U32* MASTER_SP;
+	    U32* USER_STACK;
+	    U32* ADDRESS_STACK_POINTER;
+        U32* INSTRUCTION_REGISTER;
+	    U32* SOURCE_FUNCTION_COUNTER;
+	    U32* DEST_FUNCTION_COUNTER;
+	    U32* VBR;
+	    U32* FPR[8];
+	    U32* FPIAR;
+	    U32* FPCR;
+	    U32* FPSR;
+	    U32* CACHE_CONTROL;
+	    U32* CACHE_ADDRESS;
+
+    } REGISTERS;
+
+
+    char* INSTRUCTION_MODE;
+    char* TRACE_FLAG;
+
+    unsigned int* PREVIOUS_DATA;
+    unsigned int* PREVIOUS_ADDRESS;
+    unsigned int* ADDRESS_RT_CHECK;
+    unsigned char* ERROR_ADDRESS;
+    unsigned char* ERROR_WRITE_MODE;
+    unsigned char* ERROR_PC;
+    UNK* ERROR_JUMP;
+
+    S32(*INTERRUPT_CALLBACK)(unsigned INTERRUPT);
+    S32(*RESET_INTERRUPT)(void);
+    S32(*CPU_FUNC_CALLBACK)(unsigned FUNCTION);
+	unsigned int* INT_LEVEL;
+
+	unsigned* CPU_STOPPED;
+
+	unsigned  S_FLAG;
+	unsigned* X_FLAG;
+	unsigned* N_FLAG;
+	unsigned* V_FLAG;
+	unsigned* Z_FLAG;
+	unsigned* C_FLAG;
+	unsigned  M_FLAG;
+
+	unsigned* T0_FLAG;
+	unsigned* T1_FLAG;
+
+    CPU_68K_MEMORY MEMORY_MAP[256];
+
+} CPU_68K;
+
+typedef struct CPU_68K_MEMORY
+{
+    unsigned(*MEMORY_BASE);
+    U8* MEMORY_READ_8;
+    U16* MEMORY_READ_16;
+    U8* MEMORY_WRITE_8;
+    U16* MEMORY_WRITE_16;
+
+
+} CPU_68K_MEMORY;
+
+
+extern CPU_68K* M68K;
+extern CPU_68K_MEMORY* M68K_MEMORY;
+
 #endif
 #endif
