@@ -90,6 +90,17 @@
 #define			M68K_HIGH_BITMASK		24*7
 #define 		M68K_MAX_BITMASK		32*7
 
+typedef struct CPU_68K_MEMORY
+{
+    unsigned(*MEMORY_BASE);
+    U8* MEMORY_READ_8;
+    U16* MEMORY_READ_16;
+    U8* MEMORY_WRITE_8;
+    U16* MEMORY_WRITE_16;
+
+
+} CPU_68K_MEMORY;
+
 typedef struct CPU_68K
 {
     unsigned int* PC;
@@ -202,17 +213,6 @@ typedef enum CPU_68K_REGS
 
 } CPU_68K_REGS;
 
-typedef struct CPU_68K_MEMORY
-{
-    unsigned(*MEMORY_BASE);
-    U8* MEMORY_READ_8;
-    U16* MEMORY_READ_16;
-    U8* MEMORY_WRITE_8;
-    U16* MEMORY_WRITE_16;
-
-
-} CPU_68K_MEMORY;
-
 typedef enum CPU_68K_FLAGS 
 {
     FLAG_S,
@@ -271,6 +271,11 @@ typedef enum CPU_68K_FLAGS
 #define         M68K_SET_FC_ACK         CPU->SET_FC_CALLBACK
 #define         M68K_INSTR_HOOK         CPU->INSTR_HOOK
 
+#define         M68K_MEMORY_BASE        CPU_MEMORY->MEMORY_BASE
+#define         M68K_MEMORY_READ_8      CPU_MEMORY->MEMORY_READ_8
+#define         M68K_MEMORY_READ_16      CPU_MEMORY->MEMORY_READ_16
+#define         M68K_MEMORY_WRITE_8      CPU_MEMORY->MEMORY_WRITE_8
+#define         M68K_MEMORY_WRITE_16      CPU_MEMORY->MEMORY_WRITE_16
 
 /*===============================================================================*/
 /*							68000 MAIN CPU FUNCTIONALIY							 */
