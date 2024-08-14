@@ -50,6 +50,9 @@
 /*							68000 READ AND WRITE							     */
 /*===============================================================================*/
 
+int M68K_DEFAULT_INT_ACK_CALLBACK(int LEVEL);
+void M68K_DEFAULT_INSTR_CALLBACK(void);
+
 extern unsigned int M68K_READ_8(unsigned int ADDRESS);
 extern unsigned int M68K_READ_16(unsigned int ADDRESS);
 extern unsigned int M68K_READ_32(unsigned int ADDRESS);
