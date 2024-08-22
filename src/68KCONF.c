@@ -13,4 +13,40 @@
 
 #ifdef USE_CONFIG
 
+/* SET THE CPU TYPE BASED ON HTE PRE-REQUISTIES DETERMINED BY THEIR RESPECTIVE CHARACTERISTICS */
+/* EACH OF THESE CHARACTERISTICS REFER TO THE INITIALISATION OF THE CPU'S EXECUTION */
+
+/* MOREOVER, THIS IS SPECIFC TO THE RESPECTIVE CHARACTERISTICS OF THE STATUS REGISTER */
+/* OF EACH CPU TYPE, WHICH HANDLES EXCEPTIONS AND HANDLES DIFFERENTLY BASED ON DIFFERENT ADDRESSABLE MODES */
+
+/* SEE: https://www.nxp.com/docs/en/reference-manual/MC68000UM.pdf#page=17 */
+
+void M68K_SET_CPU_TYPE(unsigned TYPE)
+{
+    switch (TYPE)
+    {
+        case M68K_CPU_000:
+            CPU_TYPE = M68K_CPU_000;
+            M68K_SR_MASK = 0x2700;
+            M68K_ADDRESS_MASK = 0x00FFFFFF;
+            M68K_CYCLE = CPU->INSTRUCTION_CYCLES[0];
+            M68K_CYC_EXCE = CPU->CYCLE_EXCEPTION[0];
+            M68K_RESET_ACK = 256;
+            return;
+
+        case M68K_CPU_010:
+            CPU_TYPE = M68K_CPU_010;
+            M68K_SR_MASK = 0x2700;
+            M68K_ADDRESS_MASK = 0x00FFFFFF;
+            M68K_CYCLE = CPU->INSTRUCTION_CYCLES[1];
+            M68K_CYC_EXCE = CPU->CYCLE_EXCEPTION[1];
+            M68K_RESET_ACK = 256;
+            return;
+        
+    
+    default:
+        break;
+    }
+}
+
 #endif
