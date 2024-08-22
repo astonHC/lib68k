@@ -104,10 +104,10 @@ typedef struct CPU_68K_MEMORY
 typedef struct CPU_68K
 {
     unsigned int* PC;
-    unsigned int* INSTRUCTION_CYCLES;
+    unsigned int** INSTRUCTION_CYCLES[0x10000];
     unsigned int* CYCLE_RATE;
     unsigned char* MEMORY_BASE;
-    unsigned int** CYCLE_EXCEPTION;
+    unsigned int* CYCLE_EXCEPTION;
 
     unsigned(*MEMORY_DATA);
     unsigned(*MEMORY_ADDRESS);
@@ -176,6 +176,9 @@ typedef struct CPU_68K
     void(*SET_FC_CALLBACK)(unsigned* NEW_FC);
     void(*INSTR_HOOK)(unsigned* PC);
 
+    unsigned int* ADDRESS_MASK;
+    unsigned int* SR_MASK;
+
     CPU_68K_MEMORY MEMORY_MAP[256];
 
 } CPU_68K;
@@ -227,7 +230,6 @@ typedef enum CPU_68K_FLAGS
 
 } CPU_68K_FLAGS;
 
-
 #define 		M68K_REG_DA				CPU->DATA_REGISTER
 #define			M68K_REG_D				CPU->DATA_REGISTER
 #define			M68K_REG_A				(CPU->DATA_REGISTER + 8)
@@ -271,17 +273,28 @@ typedef enum CPU_68K_FLAGS
 #define         M68K_SET_FC_ACK         CPU->SET_FC_CALLBACK
 #define         M68K_INSTR_HOOK         CPU->INSTR_HOOK
 
-#define         M68K_MEMORY_BASE        CPU_MEMORY->MEMORY_BASE
-#define         M68K_MEMORY_READ_8      CPU_MEMORY->MEMORY_READ_8
+#define         M68K_ADDRESS_MASK       CPU->ADDRESS_MASK
+#define         M68K_SR_MASK            CPU->SR_MASK
+
+#define         M68K_MEMORY_BASE         CPU_MEMORY->MEMORY_BASE
+#define         M68K_MEMORY_READ_8       CPU_MEMORY->MEMORY_READ_8
 #define         M68K_MEMORY_READ_16      CPU_MEMORY->MEMORY_READ_16
 #define         M68K_MEMORY_WRITE_8      CPU_MEMORY->MEMORY_WRITE_8
-#define         M68K_MEMORY_WRITE_16      CPU_MEMORY->MEMORY_WRITE_16
+#define         M68K_MEMORY_WRITE_16     CPU_MEMORY->MEMORY_WRITE_16
 
 /*===============================================================================*/
 /*							68000 MAIN CPU FUNCTIONALIY							 */
 /*===============================================================================*/
 
+void INITIALISE_68K_CYCLES();
 U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER);
+void M68K_SET_REGISTERS(struct CPU_68K* CPU, int REGISTER, unsigned VALUE);
+
+void M68K_INIT(void);
+void M68K_MEM_INIT(void);
+int M68K_EXEC(struct CPU_68K* CPU, int CYCLES);
+void M68K_JUMP(unsigned NEW_PC);
+void M68K_SET_SR_IRQ(unsigned VALUE);
 
 /*===============================================================================*/
 /*							        68000 MISC.							         */
@@ -289,6 +302,7 @@ U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER);
 
 extern CPU_68K* CPU;
 extern CPU_68K_MEMORY* CPU_MEMORY;
+extern unsigned int CPU_TYPE;
 
 #endif
 #endif
