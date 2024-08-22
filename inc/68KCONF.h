@@ -45,13 +45,22 @@
 #define 	M68K_MASK_OUT_ABOVE_32(A)           ((A) & 0xFFFFFFF)
 #define     M68K_RETURN_ADDRESS(ADDRESS)        ((*ADDRESS) & 0xFFFFFFFFFF)
 
+/*===============================================================================*/
+/*							68000 CALLBACKS						     			 */
+/*===============================================================================*/
+
+
+int M68K_SET_INT_CALLBACK(int* LEVEL);
+void M68K_DEFAULT_INSTR_CALLBACK(void);
+void M68K_SET_FUNC_CALLBACK(int* CALLBACK);
+void M68K_SET_INSTR_CALLBACK(void(*CALLBACK), unsigned PC);
+void M68K_SET_MOVE_IRQ_INT(void);
+U16* M68K_FETCH_INSTR();
 
 /*===============================================================================*/
 /*							68000 READ AND WRITE							     */
 /*===============================================================================*/
 
-int M68K_DEFAULT_INT_ACK_CALLBACK(int LEVEL);
-void M68K_DEFAULT_INSTR_CALLBACK(void);
 
 extern unsigned int M68K_READ_8(unsigned int ADDRESS);
 extern unsigned int M68K_READ_16(unsigned int ADDRESS);
@@ -65,6 +74,8 @@ extern unsigned int CTRL_READ_BYTE(unsigned int ADDRESS);
 extern unsigned int CTRL_READ_WORD(unsigned int ADDRESS);
 extern void CTRL_WRITE_BYTE(unsigned int ADDRESS, unsigned int DATA);
 extern void CTRL_WRITE_WORD(unsigned int ADDRESS, unsigned int DATA);
+
+void M68K_SET_CPU_TYPE(unsigned TYPE);
 
 
 #endif
