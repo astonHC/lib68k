@@ -27,20 +27,18 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
     {
         case M68K_CPU_000:
             CPU_TYPE = M68K_CPU_000;
-            M68K_SR_MASK = 0x2700;
-            M68K_ADDRESS_MASK = 0x00FFFFFF;
+            M68K_SR_MASK += 0x2700;
+            M68K_ADDRESS_MASK += 0x00FFFFFF;
             M68K_CYCLE = CPU->INSTRUCTION_CYCLES[0];
-            M68K_CYC_EXCE = CPU->CYCLE_EXCEPTION[0];
-            M68K_RESET_ACK = 256;
+            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[0];
             return;
 
         case M68K_CPU_010:
             CPU_TYPE = M68K_CPU_010;
-            M68K_SR_MASK = 0x2700;
-            M68K_ADDRESS_MASK = 0x00FFFFFF;
+            M68K_SR_MASK += 0x2700;
+            M68K_ADDRESS_MASK += 0x00FFFFFF;
             M68K_CYCLE = CPU->INSTRUCTION_CYCLES[1];
-            M68K_CYC_EXCE = CPU->CYCLE_EXCEPTION[1];
-            M68K_RESET_ACK = 256;
+            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[1];
             return;
         
     
