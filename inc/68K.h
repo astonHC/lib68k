@@ -105,7 +105,9 @@ typedef struct CPU_68K
 {
     unsigned int* PC;
     unsigned int** INSTRUCTION_CYCLES[0x10000];
+    unsigned int* REMAINING_CYCLES;
     unsigned int* CYCLE_RATE;
+    unsigned int* RESET_CYCLES;
     unsigned char* MEMORY_BASE;
     unsigned int* CYCLE_EXCEPTION;
 
@@ -178,6 +180,8 @@ typedef struct CPU_68K
 
     unsigned int* ADDRESS_MASK;
     unsigned int* SR_MASK;
+
+    unsigned int** RESET_MODE;
 
     CPU_68K_MEMORY MEMORY_MAP[256];
 
@@ -264,8 +268,11 @@ typedef enum CPU_68K_FLAGS
 #define			M68K_FLAG_INT_LVL		CPU->INT_LEVEL
 #define			M68K_CPU_STOPPED		CPU->CPU_STOPPED
 
+#define         M68K_CYC_REMAIN         CPU->REMAINING_CYCLES
 #define			M68K_CYC_EXCE			CPU->CYCLE_EXCEPTION
 #define 		M68K_CYCLE				CPU->INSTRUCTION_CYCLES[16]
+#define         M68K_RESET_LVL          CPU->RESET_MODE
+#define         M68K_RESET_CYCLES       CPU->RESET_CYCLES
 
 #define         M68K_INT_ACK            CPU->INT_ACK_CALLBACK
 #define         M68K_RESET_ACK          CPU->RESET_CALLBACK
@@ -292,7 +299,7 @@ void M68K_SET_REGISTERS(struct CPU_68K* CPU, int REGISTER, unsigned VALUE);
 
 void M68K_INIT(void);
 void M68K_MEM_INIT(void);
-int M68K_EXEC(struct CPU_68K* CPU, int CYCLES);
+int M68K_EXEC();
 void M68K_JUMP(unsigned NEW_PC);
 void M68K_SET_SR_IRQ(unsigned VALUE);
 
@@ -300,9 +307,9 @@ void M68K_SET_SR_IRQ(unsigned VALUE);
 /*							        68000 MISC.							         */
 /*===============================================================================*/
 
-extern CPU_68K* CPU;
-extern CPU_68K_MEMORY* CPU_MEMORY;
-extern unsigned int CPU_TYPE;
+CPU_68K* CPU;
+CPU_68K_MEMORY* CPU_MEMORY;
+unsigned int CPU_TYPE;
 
 #endif
 #endif
