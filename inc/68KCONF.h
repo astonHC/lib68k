@@ -39,6 +39,18 @@
 
 #endif
 
+#ifdef USE_CYCLES
+#define USE_CYCLES
+#else
+
+#define 	M68K_ADD_CYCLES(VALUE)				CPU->REMAINING_CYCLES += (VALUE)
+#define		M68K_USE_CYCLES(VALUE)				CPU->REMAINING_CYCLES -= (VALUE)
+#define		M68K_SET_CYCLES(VALUE)				CPU->REMAINING_CYCLES = VALUE
+#define		M68K_GET_CYCLES()					CPU->REMAINING_CYCLES
+#define		M68K_ALL_CYCLES()					CPU->REMAINING_CYCLES %= M68K_CYCLE[M68K_REG_IR]
+
+#endif
+
 
 #define 	M68K_MASK_OUT_ABOVE_8(A)            ((A) & 0xFF)
 #define 	M68K_MASK_OUT_ABOVE_16(A)           ((A) & 0xFFFF)
