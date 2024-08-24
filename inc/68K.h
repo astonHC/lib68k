@@ -283,6 +283,14 @@ typedef enum CPU_68K_FLAGS
 #define         M68K_ADDRESS_MASK       CPU->ADDRESS_MASK
 #define         M68K_SR_MASK            CPU->SR_MASK
 
+#define         M68K_MEMORY_DATA        CPU->MEMORY_DATA
+#define         M68K_MEMORY_ADDRESS     CPU->MEMORY_ADDRESS
+#define         M68K_MEMORY_PTR         CPU->MEMORY_POINTER
+
+#define         M68K_PRV_DATA           CPU->PREVIOUS_DATA
+#define         M68K_PRV_ADDR           CPU->PREVIOUS_ADDRESS
+#define         M68K_TRA_ADDR           CPU->ADDRESS_RT_CHECK
+
 #define         M68K_MEMORY_BASE         CPU_MEMORY->MEMORY_BASE
 #define         M68K_MEMORY_READ_8       CPU_MEMORY->MEMORY_READ_8
 #define         M68K_MEMORY_READ_16      CPU_MEMORY->MEMORY_READ_16
