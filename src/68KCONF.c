@@ -81,4 +81,59 @@ int M68K_EXEC()
     return 0;
 }
 
+
+/*===============================================================================*/
+/*							68000 HELPER FUNCTIONS							     */
+/*===============================================================================*/
+/*      THE FOLLOWING FUNCTIONS PERTAIN TOWARDS THE BITWISE WAYS BY WHICH        */
+/* INSTRUCTIONS WILL BE HANDLED - USING THE MEMORY MAP WHICH WILL DYNAMICALLY    */
+/*          ALLOCATE THE CORRESPONDING MEMORY FOR THE INSTRUCTION                */
+/*===============================================================================*/
+
+unsigned int M68K_READ_8(unsigned int ADDRESS)
+{
+    int INDEX = 0;
+
+    M68K_MEMORY_MAP[INDEX].MEMORY_BASE = malloc(0x1000);
+    return M68K_READ_BYTE(M68K_MEMORY_MAP[((ADDRESS)>>16)&0xFF].MEMORY_BASE, (ADDRESS) & 0xFFFF);
+}
+
+unsigned int M68K_READ_16(unsigned int ADDRESS)
+{
+    int INDEX = 0;
+
+    M68K_MEMORY_MAP[INDEX].MEMORY_BASE = malloc(0x1000);
+
+    return M68K_READ_WORD(M68K_MEMORY_MAP[((ADDRESS)>>16)&0xFF].MEMORY_BASE, (ADDRESS) & 0xFFFF);
+}
+
+unsigned int M68K_READ_32(unsigned int ADDRESS)
+{
+    int INDEX = 0;
+
+    M68K_MEMORY_MAP[INDEX].MEMORY_BASE = malloc(0x1000);
+
+    return M68K_READ_WORD_LONG(M68K_MEMORY_MAP[((ADDRESS)>>16)&0xFF].MEMORY_BASE, (ADDRESS) & 0xFFFF);
+}
+
+/* THE WRITE FUNCTIONS WILL LOOK TO DISCERN HOW MANY CYCLE TICKS ARE LEFT RELATIVE TO THE INSTRUCTION */
+/* STORE  */
+
+void M68K_WRITE_8(unsigned int ADDRESS, unsigned int DATA)
+{
+    M68K_CYC_REMAIN = M68K_CYCLE[*(U8*)M68K_REG_IR] + ADDRESS + DATA;
+}
+
+void M68K_WRITE_16(unsigned int ADDRESS, unsigned int DATA)
+{
+    M68K_CYC_REMAIN = M68K_CYCLE[*(U16*)M68K_REG_IR] + ADDRESS + DATA;
+}
+
+void M68K_WRITE_32(unsigned int ADDRESS, unsigned int DATA)
+{
+    M68K_CYC_REMAIN = M68K_CYCLE[*(U32*)M68K_REG_IR] + ADDRESS + DATA;
+}
+
+
+
 #endif
