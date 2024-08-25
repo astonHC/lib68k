@@ -157,6 +157,4 @@ void M68K_WRITE_32(unsigned int ADDRESS, unsigned int DATA)
     M68K_CYC_REMAIN = M68K_CYCLE[*(U32*)M68K_REG_IR] + ADDRESS + DATA;
 }
 
-
-
 #endif
