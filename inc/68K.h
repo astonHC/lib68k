@@ -41,13 +41,12 @@
 /*===============================================================================*/
 /*							68000 MAIN CPU FUNCTIONALIY							 */
 /*===============================================================================*/
-
 #define         M68K_ADDRESS_WIDTH_8            0xFF
 #define         M68K_ADDRESS_WIDTH_16           0xFFFF
 #define         M68K_ADDRESS_WIDTH_32           0xFFFFFFFF
 #define         M68K_SYMBOL_WIDTH               ' '
 #define         M68K_ADDRESS_IA                 (0x8000000 << 0xDFFFFFF)
-
+#define         M68K_BASE_BITMASK               256
 /*===============================================================================*/
 /*-------------------------------------------------------------------------------*/
 /*                          68000 MEMORY UTILITY MACROS                          */
@@ -244,7 +243,7 @@ typedef enum CPU_68K_FLAGS
 #define			M68K_REG_USP			CPU->USER_STACK[0]
 #define			M68K_REG_ISP			CPU->INTERRUPT_SP[4]
 #define			M68K_REG_MSP			CPU->MASTER_SP[6]
-#define			M68K_REG_SP_FULL		CPU->REGISTER_BASE[15]
+#define			M68K_REG_BASE		    CPU->REGISTER_BASE[15]
 #define			M68K_REG_VBR			CPU->VBR
 #define			M68K_REG_SFC			CPU->SOURCE_FUNCTION_COUNTER
 #define			M68K_REG_DFC			CPU->DEST_FUNCTION_COUNTER
@@ -291,6 +290,7 @@ typedef enum CPU_68K_FLAGS
 #define         M68K_PRV_ADDR           CPU->PREVIOUS_ADDRESS
 #define         M68K_TRA_ADDR           CPU->ADDRESS_RT_CHECK
 
+#define         M68K_MEMORY_MAP          CPU->MEMORY_MAP
 #define         M68K_MEMORY_BASE         CPU_MEMORY->MEMORY_BASE
 #define         M68K_MEMORY_READ_8       CPU_MEMORY->MEMORY_READ_8
 #define         M68K_MEMORY_READ_16      CPU_MEMORY->MEMORY_READ_16
@@ -303,7 +303,7 @@ typedef enum CPU_68K_FLAGS
 
 void INITIALISE_68K_CYCLES();
 U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER);
-void M68K_SET_REGISTERS(struct CPU_68K* CPU, int REGISTER, unsigned VALUE);
+void M68K_SET_REGISTERS(CPU_68K_REGS REGISTER, unsigned VALUE);
 
 void M68K_INIT(void);
 void M68K_MEM_INIT(void);
