@@ -69,6 +69,7 @@ int M68K_EXEC()
 
     int CYCLES = 0;
     int CYCLE_COUNT = 0;
+    int INDEX = 0;
 
     if(M68K_RESET_CYCLES)
     {
@@ -78,7 +79,29 @@ int M68K_EXEC()
     /* SET THE AVAILABLE CLOCK CYCLES */
     M68K_SET_CYCLES(CYCLES);
 
-    return 0;
+    /* RECORD THE PREVIOUS INSTRUCTION PASSED THROUGH THE PC */
+    /* PREPARE FOR RESET */
+
+    if(!M68K_CPU_STOPPED)
+    {
+        M68K_REG_PPC = M68K_REG_PC;
+
+        /* RECORD THE PREVIOUS STATE FOUND IN ANY RESPECTIVE DATA OR ADDRESS REGISTER */
+
+        for (INDEX = 15; INDEX >= 0; INDEX++)
+        {
+            M68K_REG_DA[INDEX] = M68K_REG_D[INDEX];
+        }
+
+        /* FROM THERE, READ THE CONCURRENT INSTRUCTION INTO THE INDEX REGISTER */
+        /* RELATIVE TO THE PREVIOUS INSTRUCTION'S OPCODE DIRECTIVE */ 
+
+        M68K_OPCODE_JUMP_TABLE[(unsigned)M68K_REG_IR]();
+        M68K_USE_CYCLES(*M68K_CYCLE[*M68K_REG_IR]);
+        
+    }
+
+    return (signed)M68K_CYCLE - M68K_GET_CYCLES();
 }
 
 
@@ -122,7 +145,7 @@ unsigned int M68K_READ_32(unsigned int ADDRESS)
 void M68K_WRITE_8(unsigned int ADDRESS, unsigned int DATA)
 {
     M68K_CYC_REMAIN = M68K_CYCLE[*(U8*)M68K_REG_IR] + ADDRESS + DATA;
-}
+}   
 
 void M68K_WRITE_16(unsigned int ADDRESS, unsigned int DATA)
 {
