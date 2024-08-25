@@ -97,8 +97,12 @@ int M68K_EXEC()
         /* RELATIVE TO THE PREVIOUS INSTRUCTION'S OPCODE DIRECTIVE */ 
 
         M68K_OPCODE_JUMP_TABLE[(unsigned)M68K_REG_IR]();
-        M68K_USE_CYCLES(*M68K_CYCLE[*M68K_REG_IR]);
-        
+        M68K_USE_CYCLES(*M68K_CYCLE[*M68K_REG_IR]);        
+    }
+    
+    else
+    {
+        M68K_SET_CYCLES(0);
     }
 
     return (signed)M68K_CYCLE - M68K_GET_CYCLES();
