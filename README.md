@@ -25,6 +25,8 @@ the following output should be a file called ``lib68k.a``
 
 [Motorola 680x0 Programmer Manual](https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf)
 
+[Motorola 680x0 User Manual](https://www.nxp.com/docs/en/reference-manual/MC68000UM.pdf)
+
 [68000 Memory Map](https://www.mwftr.com/ucF08/LEC05-68K-1.pdf)
 
 [68000 ISA](http://wpage.unina.it/rcanonic/didattica/ce1/docs/68000.pdf)
