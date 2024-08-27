@@ -158,7 +158,7 @@ typedef struct CPU_68K
     S32(*CPU_FUNC_CALLBACK)(unsigned FUNCTION);
 	unsigned int* INT_LEVEL;
 
-	unsigned* CPU_STOPPED;
+	unsigned int CPU_STOPPED;
 
 	unsigned  S_FLAG;
 	unsigned* X_FLAG;
@@ -243,7 +243,7 @@ typedef enum CPU_68K_FLAGS
 #define			M68K_REG_USP			CPU->USER_STACK[0]
 #define			M68K_REG_ISP			CPU->INTERRUPT_SP[4]
 #define			M68K_REG_MSP			CPU->MASTER_SP[6]
-#define			M68K_REG_BASE		    CPU->REGISTER_BASE[15]
+#define			M68K_REG_BASE		    CPU->REGISTER_BASE[16]
 #define			M68K_REG_VBR			CPU->VBR
 #define			M68K_REG_SFC			CPU->SOURCE_FUNCTION_COUNTER
 #define			M68K_REG_DFC			CPU->DEST_FUNCTION_COUNTER
@@ -303,13 +303,17 @@ typedef enum CPU_68K_FLAGS
 
 void INITIALISE_68K_CYCLES();
 U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER);
-void M68K_SET_REGISTERS(CPU_68K_REGS REGISTER, unsigned VALUE);
+void M68K_SET_REGISTERS(int REGISTER, unsigned VALUE);
 
 void M68K_INIT(void);
 void M68K_MEM_INIT(void);
 int M68K_EXEC();
 void M68K_JUMP(unsigned NEW_PC);
+void M68K_JUMP_VECTOR(unsigned VECTOR);
 void M68K_SET_SR_IRQ(unsigned VALUE);
+void M68K_PULSE_RESET(void);
+void M68K_PULSE_HALT(void);
+void M68K_BUILD_OPCODE_TABLE(void);
 
 /*===============================================================================*/
 /*							        68000 MISC.							         */
