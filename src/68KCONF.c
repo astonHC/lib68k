@@ -241,8 +241,20 @@ void M68K_PULSE_RESET(void)
 
 	M68K_FLAG_T1 = M68K_FLAG_T0 = 0;
 	M68K_FLAG_INT_LVL = 0;
-
 	M68K_REG_VBR = 0;
+	M68K_JUMP(0);
+
+	M68K_REG_SP += (int)M68K_READ_32(0);
+	M68K_REG_PC += (int)M68K_READ_32(0);
+
+	M68K_RESET_CYCLES += (int)M68K_CYC_EXCE[0];
+}
+
+/* SIMILAR TO PULSE RESET EXCEPT FOR THE HALT LINE */
+
+void M68K_PULSE_HALT(void)
+{
+	M68K_CPU_STOPPED |= 2;
 }
 
 /*===============================================================================*/
