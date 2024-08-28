@@ -36,17 +36,28 @@
         #else
     #define USE_CONFIG
     #include "68KCONF.h"
+        #endif
+
+        #if defined(USE_OPCODE)
+        #define USE_OPCODE
+            #else
+        #define USE_OPCODE
+        #include "68KOPCODE.h"
+        #endif
+
 #endif
 
 /*===============================================================================*/
 /*							68000 MAIN CPU FUNCTIONALIY							 */
 /*===============================================================================*/
+
 #define         M68K_ADDRESS_WIDTH_8            0xFF
 #define         M68K_ADDRESS_WIDTH_16           0xFFFF
 #define         M68K_ADDRESS_WIDTH_32           0xFFFFFFFF
 #define         M68K_SYMBOL_WIDTH               ' '
 #define         M68K_ADDRESS_IA                 (0x8000000 << 0xDFFFFFF)
 #define         M68K_BASE_BITMASK               256
+
 /*===============================================================================*/
 /*-------------------------------------------------------------------------------*/
 /*                          68000 MEMORY UTILITY MACROS                          */
@@ -67,6 +78,8 @@
                                     		                ((VALUE)[(ADDRESS)]<<16) |  		\
                                     		                ((VALUE)[(ADDRESS )+3]<<8) |   		\
                                     		                (VALUE)[(ADDRESS)+2])
+
+#define         M68K_EA_BYTE()                              M68K_ADDRESS_HIGH
 
 
 #define         M68K_CPU_000                0
@@ -323,5 +336,4 @@ CPU_68K* CPU;
 CPU_68K_MEMORY* CPU_MEMORY;
 unsigned int CPU_TYPE;
 
-#endif
 #endif
