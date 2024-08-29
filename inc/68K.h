@@ -79,7 +79,15 @@
                                     		                ((VALUE)[(ADDRESS )+3]<<8) |   		\
                                     		                (VALUE)[(ADDRESS)+2])
 
-#define         M68K_EA_BYTE()                              M68K_ADDRESS_HIGH
+/* AS AND WHEN I NEED TO ACCESS A PARTICULAR SIZE, I CAN JUST TYPECAST THESE */
+
+#define         M68K_EA()                                   M68K_ADDRESS_HIGH
+#define         M68K_EA_INCR_BYTE()                         (M68K_ADDRESS_HIGH++)
+#define         M68K_EA_INCR_WORD()                         ((M68K_ADDRESS_HIGH += 2) - 2)
+#define         M68K_EA_INCR_WORD_LONG()                    ((M68K_ADDRESS_HIGH += 4) - 4)
+#define         M68K_EA_DECR_BYTE()                         (M68K_ADDRESS_HIGH--)
+#define         M68K_EA_DECR_WORD()                         (M68K_ADDRESS_HIGH -= 2)
+#define         M68K_EA_DECR_WORD_LONG()                    (M68K_ADDRESS_HIGH -= 4)
 
 
 #define         M68K_CPU_000                0
