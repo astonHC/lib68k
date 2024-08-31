@@ -108,7 +108,7 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             M68K_SR_MASK += 0x2700;
             M68K_ADDRESS_MASK += 0x00FFFFFF;
             M68K_CYCLE = CPU->INSTRUCTION_CYCLES[0];
-            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[0];
+            M68K_CYC_EXCE += (int)CPU->CYCLE_EXCEPTION[0];
             M68K_RESET_LVL += 256;
             return;
 
@@ -117,7 +117,7 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             M68K_SR_MASK += 0x2700;
             M68K_ADDRESS_MASK += 0x00FFFFFF;
             M68K_CYCLE = CPU->INSTRUCTION_CYCLES[1];
-            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[1];
+            M68K_CYC_EXCE += (int)CPU->CYCLE_EXCEPTION[1];
             M68K_RESET_LVL += 256;
             return;
 
@@ -126,7 +126,7 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             M68K_SR_MASK += 0xF71F;
             M68K_ADDRESS_MASK += 0xFFFFFFFF;
             M68K_CYCLE = CPU->INSTRUCTION_CYCLES[2];
-            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[2];
+            M68K_CYC_EXCE += (int)CPU->CYCLE_EXCEPTION[2];
             M68K_RESET_LVL += 512;
             return;
 
