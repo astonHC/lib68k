@@ -46,7 +46,7 @@ void M68K_OP_1111(void)
 
 /* SEE INTEGER INSTRUCTIONS: https://www.nxp.com/docs/en/reference-manual/M68000PRM.pdf#PAGE=105 */
 
-void M68K_OP_ABCD_BYTE(void)
+M68K_MAKE_OPCODE(ABCD, 8, RR, 0)
 {
     int DESTINATION = M68K_DATA_HIGH;
     int SRC = M68K_DATA_LOW;
