@@ -14,7 +14,7 @@
 #include "68KCONF.h"
 #include "common.h"
 
-#ifdef USE_68K
+#ifndef USE_68K
 
 /*===============================================================================*/
 /*							68000 MAIN CPU FUNCTIONALIY							 */
@@ -207,7 +207,7 @@ int M68K_SET_INT_CALLBACK(int* LEVEL)
 /* INITIALISE THE REMAINING CALLBACKS */
 
 unsigned M68K_DEFAULT_FC_CALLBACK;
-void M68K_SET_FUNC_CALLBACK(int* CALLBACK)
+void M68K_SET_FUNC_CALLBACK(unsigned* CALLBACK)
 {
 	M68K_DEFAULT_FC_CALLBACK = *(U32*)CALLBACK;
 }
