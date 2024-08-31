@@ -27,8 +27,11 @@
 
         #undef USE_68K
 
-        #define     M68K_DATA_HIGH       (M68K_REG_D[(M68K_REG_IR >> 9) & 7])
-        #define     M68K_DATA_LOW        (M68K_REG_D[(M68K_REG_IR) & 7])
+        #define     M68K_DATA_HIGH          (*M68K_REG_D[(*M68K_REG_IR >> 9) & 7])
+        #define     M68K_DATA_LOW           (*M68K_REG_D[(*M68K_REG_IR) & 7])
+
+        #define     M68K_ADDRESS_HIGH       (*M68K_REG_A[(*M68K_REG_IR >> 9) & 7])
+        #define     M68K_ADDRESS_LOW        (*M68K_REG_A[(*M68K_REG_IR) & 7])
 
 #endif
 
@@ -36,6 +39,9 @@
     #define BUILD_OP_TABLE
     #else
     #define BUILD_OP_TABLE
+
+    #define M68K_MAKE_OPCODE(OP, SIZE, MODE, REG) \
+    void OP##_##SIZE##_##MODE##_##REG(void)
 
 void M68K_OP_1010(void);
 void M68K_OP_1111(void);
