@@ -142,6 +142,23 @@
 #define			M68K_HIGH_BITMASK		24*7
 #define 		M68K_MAX_BITMASK		32*7
 
+#define 	    M68K_EXCEPTION_RESET                         0
+#define 	    M68K_EXCEPTION_BUS_ERROR                     2 
+#define 	    M68K_EXCEPTION_ADDRESS_ERROR                 3
+#define 	    M68K_EXCEPTION_ILLEGAL_INSTRUCTION           4
+#define 	    M68K_EXCEPTION_ZERO_DIVIDE                   5
+#define 	    M68K_EXCEPTION_CHK                           6
+#define 	    M68K_EXCEPTION_TRAPV                         7
+#define 	    M68K_EXCEPTION_PRIVILEGE_VIOLATION           8
+#define 	    M68K_EXCEPTION_TRACE                         9   
+#define 	    M68K_EXCEPTION_1010                          10
+#define 	    M68K_EXCEPTION_1111                          11
+#define 	    M68K_EXCEPTION_FORMAT_ERROR                  14
+#define 	    M68K_EXCEPTION_UNINITIALIZED_INTERRUPT       15
+#define 	    M68K_EXCEPTION_SPURIOUS_INTERRUPT            24
+#define 	    M68K_EXCEPTION_INTERRUPT_AUTOVECTOR          24
+#define 	    M68K_EXCEPTION_TRAP_BASE                     32
+
 typedef struct CPU_68K_MEMORY
 {
     unsigned(*MEMORY_BASE);
@@ -161,7 +178,7 @@ typedef struct CPU_68K
     unsigned int* CYCLE_RATE;
     unsigned int* RESET_CYCLES;
     unsigned char* MEMORY_BASE;
-    unsigned int* CYCLE_EXCEPTION;
+    unsigned int** CYCLE_EXCEPTION;
 
     unsigned(*MEMORY_DATA);
     unsigned(*MEMORY_ADDRESS);
@@ -349,6 +366,8 @@ typedef enum CPU_68K_FLAGS
 #define         M68K_MEMORY_READ_16      CPU_MEMORY->MEMORY_READ_16
 #define         M68K_MEMORY_WRITE_8      CPU_MEMORY->MEMORY_WRITE_8
 #define         M68K_MEMORY_WRITE_16     CPU_MEMORY->MEMORY_WRITE_16
+
+
 
 /*===============================================================================*/
 /*							68000 MAIN CPU FUNCTIONALIY							 */
