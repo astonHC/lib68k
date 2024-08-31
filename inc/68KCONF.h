@@ -61,10 +61,10 @@
 /*							68000 CALLBACKS						     			 */
 /*===============================================================================*/
 
-
+U8 M68K_VECTOR_TABLE[5][256];
 int M68K_SET_INT_CALLBACK(int* LEVEL);
 void M68K_DEFAULT_INSTR_CALLBACK(void);
-void M68K_SET_FUNC_CALLBACK(int* CALLBACK);
+void M68K_SET_FUNC_CALLBACK(unsigned* CALLBACK);
 void M68K_SET_INSTR_CALLBACK(void(*CALLBACK), unsigned PC);
 void M68K_SET_MOVE_IRQ_INT(void);
 U16 M68K_FETCH_INSTR();
