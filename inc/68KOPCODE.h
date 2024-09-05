@@ -42,9 +42,9 @@
 
     typedef struct OPCODE
     {
-        char NAME[256];
-        char SIZE;
-        char BITS;
+        char* NAME[256];
+        char* SIZE;
+        char* BITS;
         void(*HANDLER)(void);
         unsigned MASK;
         char CYCLES;
@@ -55,8 +55,15 @@
     #define M68K_MAKE_OPCODE(OP, SIZE, MODE, REG) \
     void OP##_##SIZE##_##MODE##_##REG(void)
 
+    #define     OPCODE_NAME         OPCODE_BASE->NAME[256]
+    #define     OPCODE_SIZE         OPCODE_BASE->SIZE
+    #define     OCPODE_BITS         OPCODE_BASE->BITS
+
 void M68K_OP_1010(void);
 void M68K_OP_1111(void);
+
+OPCODE* OPCODE_BASE;
+OPCODE* FIND_OPCODE(char* NAME, int SIZE);
 
 #endif
 #endif
