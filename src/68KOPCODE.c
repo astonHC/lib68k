@@ -183,6 +183,15 @@ M68K_MAKE_OPCODE(ADDI, 32, D, 0)
     M68K_WRITE_32(0, M68K_FLAG_Z); 
 }
 
+M68K_MAKE_OPCODE(ADDQ, 8, D, 0)
+{
+    int DESTINATION = M68K_DATA_LOW;
+    int SRC = (((*M68K_REG_IR >> 9) - 1) & 7) + 1;
+
+    int RESULT = M68K_MASK_OUT_ABOVE_8(DESTINATION) + SRC + DESTINATION;
+
+    RESULT -= M68K_MASK_OUT_ABOVE_8(RESULT) | M68K_FLAG_Z;
+}
 
 /* =============================================== */
 /*              OPCODE MISC. FUNCTIONS             */
@@ -218,24 +227,20 @@ int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE)
     /* EVALUATE THE LENGTH */
 
     char* OPCODE_BUFFER = strstr(SRC, "");
-    char TYPE = NULL;
+    char* TYPE = NULL;
+    SIZE += 32;
 
     OPCODE_BUFFER += strlen("") + 1;
 
-    switch(TYPE)
+    switch(*TYPE)
     {
         case ',':
-            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(NAME, OPCODE_BUFFER, 32);
-        return;
+            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(NAME, OPCODE_BUFFER, *SIZE);
+        return 0;
 
         case ')':
-            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(OPCODE_EA, OPCODE_BUFFER, ')') | 32;
-        return;
-    }
-
-    if(TYPE == NULL)
-    {
-        perror("Could not find Opcode Handler directive to evaluate length, %0x\n");
+            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(OPCODE_EA, OPCODE_BUFFER, ')') | *SIZE;
+        return 0;
     }
 
     return 0;
@@ -243,10 +248,9 @@ int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE)
 
 int CHECK_OPCODE_LENGTH(char* SRC, char* DEST, int MAX)
 {
-    char* BUFFER = DEST;
-    int LENGTH = 0;
+    int* LENGTH = 0;
 
-    for(LENGTH = 0; *SRC != 0; SRC++)
+    for(*LENGTH = 0; *SRC != 0; SRC++)
     {
         *DEST = *SRC;
     }
