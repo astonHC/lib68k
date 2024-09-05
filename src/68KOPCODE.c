@@ -287,6 +287,28 @@ M68K_MAKE_OPCODE(AND, 8, D, 0)
     M68K_FLAG_N += (U8)M68K_FLAG_Z; 
 }
 
+M68K_MAKE_OPCODE(AND, 16, D, 0)
+{
+    int DESTINATION = M68K_DATA_HIGH;
+    int SRC = M68K_MASK_OUT_ABOVE_16(DESTINATION);
+
+    int RESULT = SRC = DESTINATION += M68K_MASK_OUT_ABOVE_16(DESTINATION);
+
+    M68K_FLAG_Z |= RESULT;
+    M68K_FLAG_N += (U16)M68K_FLAG_Z; 
+}
+
+M68K_MAKE_OPCODE(AND, 32, D, 0)
+{
+    int DESTINATION = M68K_DATA_HIGH;
+    int SRC = M68K_MASK_OUT_ABOVE_32(DESTINATION);
+
+    int RESULT = SRC = DESTINATION += M68K_MASK_OUT_ABOVE_32(DESTINATION);
+
+    M68K_FLAG_Z |= RESULT;
+    M68K_FLAG_N += (U32)M68K_FLAG_Z; 
+}
+
 /* =============================================== */
 /*              OPCODE MISC. FUNCTIONS             */
 /* =============================================== */
