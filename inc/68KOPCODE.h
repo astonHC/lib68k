@@ -40,6 +40,18 @@
     #else
     #define BUILD_OP_TABLE
 
+    typedef struct OPCODE
+    {
+        char NAME[256];
+        char SIZE;
+        char BITS;
+        void(*HANDLER)(void);
+        unsigned MASK;
+        char CYCLES;
+
+    } OPCODE;
+
+
     #define M68K_MAKE_OPCODE(OP, SIZE, MODE, REG) \
     void OP##_##SIZE##_##MODE##_##REG(void)
 
