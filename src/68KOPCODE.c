@@ -28,6 +28,56 @@ OPCODE* FIND_OPCODE(char* NAME, int SIZE)
    return NULL; 
 }
 
+
+/* NOW BASED OFF OF THE ABOVE, PARSE A RELEVANT OPCODE HANDLER NAME */
+/* BASED ON THE SRC OPERAND, LOCATION, SIZE, ETC */
+
+/* THIS WILL EXCLUDE WHITESPACE AS WELL, BEING ABLE TO READ CONTENTS EFFECTIVELY */
+/* IMPLEMENTS A FIFO CHECKER TO STORE THE LOCATION AS A POINTER */
+
+int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE)
+{
+    /* DEFINE THE BUFFER THAT CURRENTLY HOUSES THE POINTER OF THE OPERAND */
+    /* EVALUATE THE LENGTH */
+
+    char* OPCODE_BUFFER = strstr(SRC, "");
+    char TYPE = NULL;
+
+    OPCODE_BUFFER += strlen("") + 1;
+
+    switch(TYPE)
+    {
+        case ',':
+            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(NAME, OPCODE_BUFFER, 32);
+        return;
+
+        case ')':
+            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(OPCODE_EA, OPCODE_BUFFER, ')') | 32;
+        return;
+    }
+
+    if(TYPE == NULL)
+    {
+        perror("Could not find Opcode Handler directive to evaluate length, %0x\n");
+    }
+
+    return 0;
+}
+
+int CHECK_OPCODE_LENGTH(char* SRC, char* DEST, int MAX)
+{
+    char* BUFFER = DEST;
+    int LENGTH = 0;
+
+    for(LENGTH = 0; *SRC != 0; SRC++)
+    {
+        *DEST = *SRC;
+    }
+
+    *DEST = '\0';
+    return DEST - (DEST - MAX);
+}
+
 /* EXCEPTION HANDLER FOR A-LINE INSTRUCTION HANDLERS */
 /* DISCERN THE CURRENT EXCEPTION BEING FED INTO PC AND APPEND THAT THROUGH A JMP */ 
 
