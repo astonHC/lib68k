@@ -73,7 +73,7 @@
 void M68K_OP_1010(void);
 void M68K_OP_1111(void);
 
-extern OPCODE* OPCODE_BASE;
+OPCODE* OPCODE_BASE;
 OPCODE* FIND_OPCODE(char* NAME, int SIZE);
 int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE);
 int CHECK_OPCODE_LENGTH(char* SRC, char* DEST, int MAX);
