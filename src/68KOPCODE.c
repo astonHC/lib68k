@@ -309,6 +309,45 @@ M68K_MAKE_OPCODE(AND, 32, D, 0)
     M68K_FLAG_N += (U32)M68K_FLAG_Z; 
 }
 
+/* BUILD THE OVERARCHING OPCODE TABLE BASED ON ALL OF THE DIRECTIVES AND PRE-REQUISITIES */
+/* THIS WILL WORK ON THE BASIS BY WHICH IT WILL BE ASSUME THE CURRENT OPERAND BASED ON THE MASK */
+/* AND IT'S DESIGNATED VALUE */ 
+
+void M68K_BUILD_OPCODE_TABLE(void)
+{
+    struct OPCODE* OP = malloc(sizeof(OPCODE));
+    int* MASK_LEVEL = 0;
+    int INDEX = 0;
+
+    switch (*MASK_LEVEL)
+    {
+        case OPCODE_ILLEGAL_MASK:
+            M68K_OPCODE_JUMP_TABLE[INDEX] = NULL;
+            M68K_CYCLE[INDEX] += 4;
+            break;
+
+        case OPCODE_DEF_MASK:
+            M68K_OPCODE_JUMP_TABLE[INDEX] = NULL;
+            M68K_CYCLE[INDEX] += 4;
+            break;
+
+        case OPCODE_BYTE_MASK:
+            M68K_CYCLE += *OP->NAME | INDEX << 9;
+
+            M68K_OPCODE_JUMP_TABLE[*OP->NAME | INDEX] = OP->HANDLER;
+            M68K_CYCLE[INDEX] += 4;
+            break; 
+
+    
+        default:
+            OP += (int)M68K_OPCODE_JUMP_TABLE[0];
+            break;
+
+    }
+
+    free(OP);
+}
+
 /* =============================================== */
 /*              OPCODE MISC. FUNCTIONS             */
 /* =============================================== */
