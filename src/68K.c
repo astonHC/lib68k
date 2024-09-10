@@ -103,7 +103,7 @@ U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER)
         case M68K_PC: return (U32*)(uintptr_t)M68K_RETURN_ADDRESS(CPU->PC);
 
 		case M68K_USP:
-			return *(unsigned*)CPU->S_FLAG;
+			return (unsigned*)CPU->S_FLAG;
 
 		case M68K_ISP:
             return CPU->S_FLAG ? (U32*)CPU->STACK_POINTER[4] : (U32*)CPU->REGISTER_BASE[15];
