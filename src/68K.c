@@ -106,7 +106,7 @@ U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER)
 			return (unsigned*)CPU->S_FLAG;
 
 		case M68K_ISP:
-            return CPU->S_FLAG ? *(U32*)CPU->STACK_POINTER[4] : (U32*)CPU->REGISTER_BASE[15];
+            return CPU->S_FLAG ? (int)CPU->STACK_POINTER[4] : CPU->REGISTER_BASE[15];
 
 		case M68K_SP:
 			return CPU->REGISTER_BASE[15];
