@@ -122,8 +122,10 @@
 #define         M68K_BIT_1E(VALUE)                                  ((VALUE) & 0x40000000)
 #define         M68K_BIT_1F(VALUE)                                  ((VALUE) & 0x80000000)
 
-#define         M68K_LOW_NIBBLE(VALUE)                              (VALUE << 9)
-#define         M68K_HIGH_NIBBLE(VALUE)                             ((VALUE >> 9) << 16)
+/* THESE CAN JUST BE TYPE CASTED FOR EACH OF THEIR RESPECTIVE SIZES */
+
+#define         M68K_LOW_NIBBLE(VALUE)
+#define         M68K_HIGH_NIBBLE(VALUE)
 
 #define         M68K_CPU_000                0
 #define         M68K_CPU_010                1
@@ -233,13 +235,13 @@ typedef struct CPU_68K
 
 	unsigned int CPU_STOPPED;
 
-	unsigned* S_FLAG;
-	unsigned* X_FLAG;
-	unsigned* N_FLAG;
-	unsigned* V_FLAG;
-	unsigned* Z_FLAG;
-	unsigned* C_FLAG;
-	unsigned  M_FLAG;
+	unsigned S_FLAG;
+	unsigned X_FLAG;
+	unsigned N_FLAG;
+	unsigned V_FLAG;
+	unsigned Z_FLAG;
+	unsigned C_FLAG;
+	unsigned M_FLAG;
 
 	unsigned* T0_FLAG;
 	unsigned* T1_FLAG;
