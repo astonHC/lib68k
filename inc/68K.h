@@ -122,6 +122,9 @@
 #define         M68K_BIT_1E(VALUE)                                  ((VALUE) & 0x40000000)
 #define         M68K_BIT_1F(VALUE)                                  ((VALUE) & 0x80000000)
 
+#define         M68K_LOW_NIBBLE(VALUE)                              (VALUE << 9)
+#define         M68K_HIGH_NIBBLE(VALUE)                             ((VALUE >> 9) << 16)
+
 #define         M68K_CPU_000                0
 #define         M68K_CPU_010                1
 #define         M68K_CPU_020                2
@@ -230,7 +233,7 @@ typedef struct CPU_68K
 
 	unsigned int CPU_STOPPED;
 
-	unsigned  S_FLAG;
+	unsigned* S_FLAG;
 	unsigned* X_FLAG;
 	unsigned* N_FLAG;
 	unsigned* V_FLAG;
@@ -285,7 +288,7 @@ typedef enum CPU_68K_REGS
 	M68K_VBR,
 	M68K_DFC,
 	M68K_CACR,
-	M68K_CAAR,
+	M68K_CAAR
 
 } CPU_68K_REGS;
 
