@@ -146,13 +146,13 @@ int M68K_EXEC()
     /* ASSUME THAT THE CLOCK CYCLES HAVE BEEN RESET UPON INITIAL BOOT */
 
     int CYCLES = 0;
-    int CYCLE_COUNT = 0;
+    unsigned* CYCLE_COUNT = 0;
     int INDEX = 0;
 
     if(M68K_RESET_CYCLES)
     {
-        CYCLE_COUNT += (int)M68K_RESET_CYCLES;
-		return CYCLE_COUNT;
+        CYCLE_COUNT = M68K_RESET_CYCLES;
+		return *CYCLE_COUNT;
     }
 
     /* SET THE AVAILABLE CLOCK CYCLES */
