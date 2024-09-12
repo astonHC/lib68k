@@ -19,7 +19,22 @@ make clean
 make
 ```
 
-the following output should be a file called ``lib68k.a``
+the following output will vary depending on system:
+
+### Windows:
+
+```
+lib68k.a
+```
+
+### UNIX:
+
+```
+lib68k.so
+```
+
+adjust the ``makefile`` to suit whichever output you may need
+the makefile in question is universal, allowing for ease of use compiling on other systems
 
  # Sources:
 
