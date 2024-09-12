@@ -184,12 +184,12 @@ int M68K_EXEC()
         M68K_SET_CYCLES(0);
     }
 
-    return (signed)M68K_CYCLE - M68K_GET_CYCLES();
+    return *M68K_CYCLE - M68K_GET_CYCLES();
 }
 
 int M68K_CYCLES_RUN(void)
 {
-    return M68K_GET_CYCLES() - (int)M68K_CYCLE;
+    return M68K_GET_CYCLES() -= *(int*)M68K_CYCLE;
 }
 
 int M68K_CYCLES_REMAINING(void)
