@@ -22,6 +22,9 @@ INC			=		inc
 ##			    TARGET LINKING			       ##
 #########################################################################
 
+## ADJUST THE FILE EXTENSION TO SUIT WHICHEVER FILE EXT YOU NEED
+## CONSULT THE README FOR DIRECTIONS
+
 TARGET 		=		lib68k.a
 
 all: $(TARGET)
