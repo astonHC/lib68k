@@ -35,6 +35,36 @@
     #define         MAX_OPCODE_INPUT        1000      
     #define         MAX_OPCODE_TABLE        3000
 
+    /* ENUM STORE OF ALL OF THE POSSIBLE EFFECTIVE ADDRESING MODES */
+    /* =========================================================== */
+    /* KEY:                                                        */
+    /* AI = ADDRESS REGISTER INDIRECT */
+    /* PI = ADDRESS REGISTER INDIRECT WITH POST INCREMENT */
+    /* PI7 = ADDRESS REGISTER 7 VER OF PI */
+    /* PD = PRE-DECREMENT */
+    /* PD7 = ADDRESS REGISRER 7 VER OF PD */
+    /* DI = DISP. */
+    /* IND = INDEX */
+    /* =========================================================== */
+
+    typedef enum M68K_EA
+    {
+        EA_MODE_NONE,
+        EA_MODE_AI,
+        EA_MODE_PI,
+        EA_MODE_PI7,
+        EA_MODE_PD,
+        EA_MODE_PD7,
+        EA_MODE_DI,
+        EA_MODE_IND,
+        EA_MODE_WORD,
+        EA_MODE_LONG,
+        EA_MODE_PCDI,
+        EA_MODE_PCIND,
+        EA_MODE_I
+
+    } M68K_EA;
+
 #endif
 
 #endif
