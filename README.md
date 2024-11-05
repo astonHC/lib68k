@@ -33,7 +33,6 @@ lib68k.a
 lib68k.so
 ```
 
-adjust the ``makefile`` to suit whichever output you may need
 the makefile in question is universal, allowing for ease of use compiling on other systems
 
  # Sources:
