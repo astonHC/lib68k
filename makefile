@@ -23,7 +23,7 @@ INC			=		inc
 #########################################################################
 
 TARGET 		= 		lib68k.exe  
-LIBRARY		= 		lib68k.so, lib68k.a     
+LIBRARY		= 		lib68k.so lib68k.a     
 
 all: $(TARGET)
 
