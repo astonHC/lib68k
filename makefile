@@ -7,7 +7,7 @@
 
 CC 			=		$(PREFIX)gcc
 AR			=		$(PREFIX)ar
-WARNINGS		=		-std=c90 -Wall -Wextra -Wparentheses -Werror -pedantic
+WARNINGS	=		-std=c99 -Wall -Wextra -Wparentheses -Werror -pedantic
 SRC			= 		src
 INC			=		inc
 
@@ -22,25 +22,22 @@ INC			=		inc
 ##			    TARGET LINKING			       ##
 #########################################################################
 
-## ADJUST THE FILE EXTENSION TO SUIT WHICHEVER FILE EXT YOU NEED
-## CONSULT THE README FOR DIRECTIONS
-
-TARGET 		=		lib68k.a
+TARGET 		= 		lib68k.exe  
+LIBRARY		= 		lib68k.so     
 
 all: $(TARGET)
 
-$(TARGET): $(68K_OBJS)
+$(LIBRARY): $(68K_OBJS)
 	$(AR) rcs $@ $^
+
+$(TARGET): $(LIBRARY)
+	$(CC) -o $@ -L. -l68k $(WARNINGS)  
 
 $(SRC)/%.o: $(SRC)/%.c
 	$(CC) $(WARNINGS) -I$(INC) -c $< -o $@
 
-#########################################################################
-##				CLEANUP 			       ##
-#########################################################################
-
 clean:
-	rm -f $(SRC)/*.o $(TARGET)
+	rm -f $(SRC)/*.o $(TARGET) $(LIBRARY)
 
 .PHONY: clean
 
