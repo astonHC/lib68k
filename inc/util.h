@@ -34,6 +34,7 @@
     #define         MAX_EA                  5
     #define         MAX_OPCODE_INPUT        1000      
     #define         MAX_OPCODE_TABLE        3000
+    #define         MAX_MEMORY_SIZE         1024 * 1024
 
     /* ENUM STORE OF ALL OF THE POSSIBLE EFFECTIVE ADDRESING MODES */
     /* =========================================================== */
@@ -65,6 +66,16 @@
 
     } M68K_EA;
 
-#endif
+    typedef struct LIB_BASE
+    {
+        char OUTPUT_PATH[MAX_DIR_BUFFER];
+        char* FILENMAE[MAX_PATH_BUFFER * 2];
+        char* SECTION_ID[MAX_LINE_BUFFER + 1];
+        char* FILE_PATH;
 
+        int OPCODE_HANDLER_READ;
+
+    } LIB_BASE;
+
+#endif
 #endif
