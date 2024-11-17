@@ -13,6 +13,8 @@
 
 #ifdef USE_CONFIG
 
+static unsigned int CPU_TYPE;
+
 U8 M68K_VECTOR_TABLE[5][256] =
 {
 	{ 
