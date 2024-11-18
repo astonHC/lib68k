@@ -122,10 +122,8 @@
 #define         M68K_BIT_1E(VALUE)                                  ((VALUE) & 0x40000000)
 #define         M68K_BIT_1F(VALUE)                                  ((VALUE) & 0x80000000)
 
-/* THESE CAN JUST BE TYPE CASTED FOR EACH OF THEIR RESPECTIVE SIZES */
-
 #define         M68K_LOW_NIBBLE(VALUE)
-#define         M68K_HIGH_NIBBLE(VALUE)
+#define         M68K_HIGH_NIBBLE(VALUE)                             ((VALUE >> 9) << 16)
 
 #define         M68K_CPU_000                0
 #define         M68K_CPU_010                1
@@ -179,7 +177,7 @@ typedef struct CPU_68K
 {
     unsigned int* PC;
     unsigned int** INSTRUCTION_CYCLES[0x10000];
-    unsigned int* REMAINING_CYCLES;
+    unsigned int REMAINING_CYCLES;
     unsigned int* CYCLE_RATE;
     unsigned int* RESET_CYCLES;
     unsigned char* MEMORY_BASE;
@@ -195,27 +193,27 @@ typedef struct CPU_68K
 
 	unsigned int* STOPPED;
 
-    U16* STATUS_REGISTER;
-	U32* INDEX_REGISTER;
-    U32* REGISTER_BASE[16];
-	U32* DATA_REGISTER[8];
-	U32* ADDRESS_REGISTER[8];
-    U32* PREVIOUS_PC;
-    U32* STACK_POINTER;
-	U32* INTERRUPT_SP;
-	U32* MASTER_SP;
-	U32* USER_STACK;
-	U32* ADDRESS_STACK_POINTER;
-    U32* INSTRUCTION_REGISTER;
-	U32* SOURCE_FUNCTION_COUNTER;
-	U32* DEST_FUNCTION_COUNTER;
-	U32* VBR;
-	U32* FPR[8];
-	U32* FPIAR;
-	U32* FPCR;
-	U32* FPSR;
-	U32* CACHE_CONTROL;
-	U32* CACHE_ADDRESS;
+    U16 STATUS_REGISTER;
+	U32 INDEX_REGISTER;
+    U32 REGISTER_BASE[16];
+	U32 DATA_REGISTER[8];
+	U32 ADDRESS_REGISTER[8];
+    U32 PREVIOUS_PC;
+    U32 STACK_POINTER;
+	U32 INTERRUPT_SP;
+	U32 MASTER_SP;
+	U32 USER_STACK;
+	U32 ADDRESS_STACK_POINTER;
+    U32 INSTRUCTION_REGISTER;
+	U32 SOURCE_FUNCTION_COUNTER;
+	U32 DEST_FUNCTION_COUNTER;
+	U32 VBR;
+	U32 FPR[8];
+	U32 FPIAR;
+	U32 FPCR;
+	U32 FPSR;
+	U32 CACHE_CONTROL;
+	U32 CACHE_ADDRESS;
 
     char* INSTRUCTION_MODE;
     char* TRACE_FLAG;
@@ -315,10 +313,10 @@ typedef enum CPU_68K_FLAGS
 #define			M68K_REG_PPC			CPU->PREVIOUS_PC
 #define			M68K_REG_PC				CPU->PC
 #define			M68K_REG_SP				CPU->STACK_POINTER
-#define			M68K_REG_USP			CPU->USER_STACK[0]
-#define			M68K_REG_ISP			CPU->INTERRUPT_SP[4]
-#define			M68K_REG_MSP			CPU->MASTER_SP[6]
-#define			M68K_REG_BASE		    CPU->REGISTER_BASE[16]
+#define			M68K_REG_USP			CPU->USER_STACK
+#define			M68K_REG_ISP			CPU->INTERRUPT_SP
+#define			M68K_REG_MSP			CPU->MASTER_SP
+#define			M68K_REG_BASE		    CPU->REGISTER_BASE
 #define			M68K_REG_VBR			CPU->VBR
 #define			M68K_REG_SFC			CPU->SOURCE_FUNCTION_COUNTER
 #define			M68K_REG_DFC			CPU->DEST_FUNCTION_COUNTER
@@ -344,7 +342,7 @@ typedef enum CPU_68K_FLAGS
 
 #define         M68K_CYC_REMAIN         CPU->REMAINING_CYCLES
 #define			M68K_CYC_EXCE			CPU->CYCLE_EXCEPTION
-#define 		M68K_CYCLE				CPU->INSTRUCTION_CYCLES[16]
+#define 		M68K_CYCLE				CPU->INSTRUCTION_CYCLES
 #define         M68K_RESET_LVL          CPU->RESET_MODE
 #define         M68K_RESET_CYCLES       CPU->RESET_CYCLES
 
@@ -380,7 +378,7 @@ typedef enum CPU_68K_FLAGS
 
 void INITIALISE_68K_CYCLES();
 U32* M68K_GET_REGISTERS(struct CPU_68K* CPU, int REGISTER);
-void M68K_SET_REGISTERS(int REGISTER, unsigned VALUE);
+void M68K_SET_REGISTERS(unsigned int REGISTER, unsigned int VALUE);
 
 void M68K_INIT(void);
 void M68K_MEM_INIT(void);
@@ -396,8 +394,5 @@ void M68K_BUILD_OPCODE_TABLE(void);
 /*							        68000 MISC.							         */
 /*===============================================================================*/
 
-CPU_68K* CPU;
-CPU_68K_MEMORY* CPU_MEMORY;
-unsigned int CPU_TYPE;
-
+static CPU_68K* CPU;
 #endif
