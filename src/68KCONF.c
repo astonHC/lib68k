@@ -14,6 +14,8 @@
 #ifdef USE_CONFIG
 
 static unsigned int CPU_TYPE;
+static void(*M68K_OPCODE_JUMP_TABLE[0x10000])(void);
+
 
 U8 M68K_VECTOR_TABLE[5][256] =
 {
@@ -109,8 +111,8 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             CPU_TYPE = M68K_CPU_000;
             M68K_SR_MASK += 0x2700;
             M68K_ADDRESS_MASK += 0x00FFFFFF;
-            M68K_CYCLE = CPU->INSTRUCTION_CYCLES[0];
-            M68K_CYC_EXCE += *(int*)CPU->CYCLE_EXCEPTION[0];
+            *M68K_CYCLE = CPU->INSTRUCTION_CYCLES[0];
+            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[0];
             M68K_RESET_LVL += 256;
             return;
 
@@ -118,8 +120,8 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             CPU_TYPE = M68K_CPU_010;
             M68K_SR_MASK += 0x2700;
             M68K_ADDRESS_MASK += 0x00FFFFFF;
-            M68K_CYCLE = CPU->INSTRUCTION_CYCLES[1];
-            M68K_CYC_EXCE += *(int*)CPU->CYCLE_EXCEPTION[1];
+            *M68K_CYCLE = CPU->INSTRUCTION_CYCLES[1];
+            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[1];
             M68K_RESET_LVL += 256;
             return;
 
@@ -127,8 +129,8 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             CPU_TYPE = M68K_CPU_020;
             M68K_SR_MASK += 0xF71F;
             M68K_ADDRESS_MASK += 0xFFFFFFFF;
-            M68K_CYCLE = CPU->INSTRUCTION_CYCLES[2];
-            M68K_CYC_EXCE += *(int*)CPU->CYCLE_EXCEPTION[2];
+            *M68K_CYCLE = CPU->INSTRUCTION_CYCLES[2];
+            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[2];
             M68K_RESET_LVL += 512;
             return;
 
@@ -165,7 +167,7 @@ int M68K_EXEC()
 
     if(!M68K_CPU_STOPPED)
     {
-        M68K_REG_PPC = M68K_REG_PC;
+		memcpy(M68K_REG_PC, M68K_REG_PPC, 0);
 
         /* RECORD THE PREVIOUS STATE FOUND IN ANY RESPECTIVE DATA OR ADDRESS REGISTER */
 
@@ -177,8 +179,8 @@ int M68K_EXEC()
         /* FROM THERE, READ THE CONCURRENT INSTRUCTION INTO THE INDEX REGISTER */
         /* RELATIVE TO THE PREVIOUS INSTRUCTION'S OPCODE DIRECTIVE */ 
 
-        M68K_OPCODE_JUMP_TABLE[*M68K_REG_IR]();
-        M68K_USE_CYCLES(*M68K_CYCLE[*M68K_REG_IR]);        
+        M68K_OPCODE_JUMP_TABLE[M68K_REG_IR]();
+        M68K_USE_CYCLES(M68K_CYCLE[M68K_REG_IR]);        
     }
     
     else
