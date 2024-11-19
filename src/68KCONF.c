@@ -14,7 +14,6 @@
 #ifdef USE_CONFIG
 
 static unsigned int CPU_TYPE;
-static void(*M68K_OPCODE_JUMP_TABLE[0x10000])(void);
 static int INIT_CYCLES;
 
 U8 M68K_VECTOR_TABLE[5][256] =
@@ -152,6 +151,8 @@ int M68K_EXEC(void)
     int CYCLES = 0;
     unsigned CYCLE_COUNT = 0;
 
+	int REG_INDEX = 0;
+
     if(M68K_RESET_CYCLES)
     {
         CYCLE_COUNT = M68K_RESET_CYCLES;
@@ -174,14 +175,14 @@ int M68K_EXEC(void)
 
         	for (int INDEX = 0; INDEX < 16; INDEX++)
         	{
-        	    M68K_REG_DA[INDEX] = M68K_REG_D[INDEX];
+        	    REG_INDEX[M68K_REG_DA] = M68K_REG_D[INDEX];
         	}
 
         	/* FROM THERE, READ THE CONCURRENT INSTRUCTION INTO THE INDEX REGISTER */
         	/* RELATIVE TO THE PREVIOUS INSTRUCTION'S OPCODE DIRECTIVE */ 
 
-        	M68K_OPCODE_JUMP_TABLE[M68K_REG_IR]();
-        	M68K_USE_CYCLES(M68K_CYCLE[M68K_REG_IR]);  
+
+        	M68K_USE_CYCLES(REG_INDEX); 
 
 		}    while(M68K_GET_CYCLES() > 0);   
     }
