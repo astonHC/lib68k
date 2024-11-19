@@ -109,19 +109,19 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
     {
         case M68K_CPU_000:
             CPU_TYPE = M68K_CPU_000;
-            M68K_SR_MASK += 0x2700;
+            M68K_SR_MASK = 0x2700;
             M68K_ADDRESS_MASK += 0x00FFFFFF;
-            *M68K_CYCLE = CPU->INSTRUCTION_CYCLES[0];
-            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[0];
+            M68K_CYCLE == CPU.INSTRUCTION_CYCLES;
+            M68K_CYC_EXCE = CPU.CYCLE_EXCEPTION;
             M68K_RESET_LVL += 256;
             return;
 
         case M68K_CPU_010:
             CPU_TYPE = M68K_CPU_010;
-            M68K_SR_MASK += 0x2700;
+            M68K_SR_MASK = 0x2700;
             M68K_ADDRESS_MASK += 0x00FFFFFF;
-            *M68K_CYCLE = CPU->INSTRUCTION_CYCLES[1];
-            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[1];
+            M68K_CYCLE = CPU.INSTRUCTION_CYCLES;
+            M68K_CYC_EXCE = CPU.CYCLE_EXCEPTION;
             M68K_RESET_LVL += 256;
             return;
 
@@ -129,8 +129,8 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             CPU_TYPE = M68K_CPU_020;
             M68K_SR_MASK += 0xF71F;
             M68K_ADDRESS_MASK += 0xFFFFFFFF;
-            *M68K_CYCLE = CPU->INSTRUCTION_CYCLES[2];
-            M68K_CYC_EXCE += CPU->CYCLE_EXCEPTION[2];
+            M68K_CYCLE = CPU.INSTRUCTION_CYCLES;
+            M68K_CYC_EXCE = CPU.CYCLE_EXCEPTION;
             M68K_RESET_LVL += 512;
             return;
 
@@ -167,7 +167,7 @@ int M68K_EXEC()
 
     if(!M68K_CPU_STOPPED)
     {
-		memcpy(M68K_REG_PC, M68K_REG_PPC, 0);
+		memcpy(M68K_REG_PC, &M68K_REG_PPC, 0);
 
         /* RECORD THE PREVIOUS STATE FOUND IN ANY RESPECTIVE DATA OR ADDRESS REGISTER */
 
@@ -251,7 +251,7 @@ void M68K_PULSE_RESET(void)
 	M68K_REG_SP += (int)M68K_READ_32(0);
 	M68K_REG_PC += (int)M68K_READ_32(0);
 
-	M68K_RESET_CYCLES += *(int*)M68K_CYC_EXCE[0];
+	M68K_RESET_CYCLES += M68K_CYC_EXCE[0];
 }
 
 /* SIMILAR TO PULSE RESET EXCEPT FOR THE HALT LINE */
@@ -300,17 +300,17 @@ unsigned int M68K_READ_32(unsigned int ADDRESS)
 
 void M68K_WRITE_8(unsigned int ADDRESS, unsigned int DATA)
 {
-    M68K_CYC_REMAIN = M68K_CYCLE[*(U8*)M68K_REG_IR] + ADDRESS + DATA;
+    M68K_CYC_REMAIN = M68K_CYCLE[(U8)M68K_REG_IR] + ADDRESS + DATA;
 }   
 
 void M68K_WRITE_16(unsigned int ADDRESS, unsigned int DATA)
 {
-    M68K_CYC_REMAIN = M68K_CYCLE[*(U16*)M68K_REG_IR] + ADDRESS + DATA;
+    M68K_CYC_REMAIN = M68K_CYCLE[(U16)M68K_REG_IR] + ADDRESS + DATA;
 }
 
 void M68K_WRITE_32(unsigned int ADDRESS, unsigned int DATA)
 {
-    M68K_CYC_REMAIN = M68K_CYCLE[*(U32*)M68K_REG_IR] + ADDRESS + DATA;
+    M68K_CYC_REMAIN = M68K_CYCLE[(U32)M68K_REG_IR] + ADDRESS + DATA;
 }
 
 #endif
