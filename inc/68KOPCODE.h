@@ -29,11 +29,11 @@
 
         #undef USE_68K
 
-        #define     M68K_DATA_HIGH          (*M68K_REG_D[(*M68K_REG_IR >> 9) & 7])
-        #define     M68K_DATA_LOW           (*M68K_REG_D[(*M68K_REG_IR) & 7])
+        #define     M68K_DATA_HIGH          (M68K_REG_D[(M68K_REG_IR >> 9) & 7])
+        #define     M68K_DATA_LOW           (M68K_REG_D[(M68K_REG_IR) & 7])
 
-        #define     M68K_ADDRESS_HIGH       (*M68K_REG_A[(*M68K_REG_IR >> 9) & 7])
-        #define     M68K_ADDRESS_LOW        (*M68K_REG_A[(*M68K_REG_IR) & 7])
+        #define     M68K_ADDRESS_HIGH       (M68K_REG_A[(M68K_REG_IR >> 9) & 7])
+        #define     M68K_ADDRESS_LOW        (M68K_REG_A[(M68K_REG_IR) & 7])
 
 #endif
 
@@ -73,8 +73,6 @@
 void M68K_OP_1010(void);
 void M68K_OP_1111(void);
 
-OPCODE* OPCODE_BASE;
-OPCODE* FIND_OPCODE(char* NAME, int SIZE);
 int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE);
 int CHECK_OPCODE_LENGTH(char* SRC, char* DEST, int MAX);
 
