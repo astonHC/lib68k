@@ -46,17 +46,19 @@
     #define         OPCODE_DEF_MASK                 (0xFF00 >> 0x0000)
     #define         OPCODE_BYTE_MASK                (0xF1F8 >> 0x0000)
 
+    #define         OPCODE_MAX                      0x10000
+
     typedef struct OPCODE
     {
-        char* NAME;
-        char* SIZE;
-        char* BITS;
+        char NAME;
+        char SIZE;
+        char BITS;
         void(*HANDLER)(void);
         unsigned MASK;
         char CYCLES;
 
-        char* PROCESS;
-        char* EA;
+        char PROCESS;
+        char EA;
 
     } OPCODE;
 
@@ -64,11 +66,11 @@
     #define M68K_MAKE_OPCODE(OP, SIZE, MODE, REG) \
     void OP##_##SIZE##_##MODE##_##REG(void)
 
-    #define     OPCODE_NAME         OPCODE_BASE->NAME      
-    #define     OPCODE_SIZE         OPCODE_BASE->SIZE
-    #define     OPCODE_BITS         OPCODE_BASE->BITS
-    #define     OPCODE_PROCESS      OPCODE_BASE->PROCESS
-    #define     OPCODE_EA           OPCODE_BASE->EA
+    #define     OPCODE_NAME         OPCODE_BASE.NAME      
+    #define     OPCODE_SIZE         OPCODE_BASE.SIZE
+    #define     OPCODE_BITS         OPCODE_BASE.BITS
+    #define     OPCODE_PROCESS      OPCODE_BASE.PROCESS
+    #define     OPCODE_EA           OPCODE_BASE.EA
 
 void M68K_OP_1010(void);
 void M68K_OP_1111(void);
