@@ -111,7 +111,7 @@ void M68K_SET_CPU_TYPE(unsigned TYPE)
             CPU_TYPE = M68K_CPU_000;
             M68K_SR_MASK = 0x2700;
             M68K_ADDRESS_MASK += 0x00FFFFFF;
-            M68K_CYCLE == CPU.INSTRUCTION_CYCLES;
+            M68K_CYCLE = CPU.INSTRUCTION_CYCLES;
             M68K_CYC_EXCE = CPU.CYCLE_EXCEPTION;
             M68K_RESET_LVL += 256;
             return;
