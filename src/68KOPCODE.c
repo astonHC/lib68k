@@ -11,7 +11,7 @@
 
 #ifdef BUILD_OP_TABLE
 
-OPCODE* OPCODE_BASE;
+OPCODE OPCODE_BASE;
 OPCODE* FIND_OPCODE(char* NAME, int SIZE);
 void(*M68K_OPCODE_JUMP_TABLE[0x10000])(void);
 static int CYCLE_INDEX[OPCODE_MAX];
@@ -385,12 +385,18 @@ M68K_MAKE_OPCODE(BCC, 8, 0, 0)
 
 void M68K_BUILD_OPCODE_TABLE(void)
 {
-    for(int INDEX = 0; INDEX < OPCODE_MAX; INDEX++)
+    int INDEX = 0;
+
+    for(INDEX = 0; INDEX < OPCODE_MAX; INDEX++)
     {
         // DEFAULT TO ILLEGAL FOR SAFE MEMORY CHECKS
 
         CYCLE_INDEX[INDEX] = 4;
+    }
 
+    for (INDEX = 0; INDEX < OPCODE_MAX; INDEX++)
+    {
+        CYCLE_INDEX[INDEX] = OPCODE_NAME;
     }
 }
 
@@ -409,7 +415,7 @@ OPCODE* FIND_OPCODE(char* NAME, int SIZE)
 
     for (INDEX = 0; INDEX < 1000; INDEX++)
     {
-        return strcmp(NAME, OPCODE_NAME) == 0 && (OPCODE_SIZE += (int)SIZE) ? OPCODE_BASE : 0;
+        return strcmp(NAME, &OPCODE_NAME) == 0 && (OPCODE_SIZE += (int)SIZE) ? &OPCODE_BASE : 0;
     }
 
    return NULL; 
@@ -440,7 +446,7 @@ int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE)
         return 0;
 
         case ')':
-            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(OPCODE_EA, OPCODE_BUFFER, ')') | *SIZE;
+            OPCODE_BUFFER += CHECK_OPCODE_LENGTH(&OPCODE_EA, OPCODE_BUFFER, ')') | *SIZE;
         return 0;
     }
 
