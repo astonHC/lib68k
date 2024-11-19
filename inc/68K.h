@@ -175,13 +175,13 @@ typedef struct CPU_68K_MEMORY
 
 typedef struct CPU_68K
 {
-    unsigned int* PC;
-    unsigned int** INSTRUCTION_CYCLES[0x10000];
+    unsigned int PC;
+    unsigned int* INSTRUCTION_CYCLES;
     unsigned int REMAINING_CYCLES;
-    unsigned int* CYCLE_RATE;
-    unsigned int* RESET_CYCLES;
-    unsigned char* MEMORY_BASE;
-    unsigned int** CYCLE_EXCEPTION;
+    unsigned int CYCLE_RATE;
+    unsigned int RESET_CYCLES;
+    unsigned char MEMORY_BASE;
+    unsigned int* CYCLE_EXCEPTION;
 
     unsigned(*MEMORY_DATA);
     unsigned(*MEMORY_ADDRESS);
@@ -191,7 +191,7 @@ typedef struct CPU_68K
 	unsigned(*HIGH_ADDR);
 	void(*USER_DATA);
 
-	unsigned int* STOPPED;
+	unsigned int STOPPED;
 
     U16 STATUS_REGISTER;
 	U32 INDEX_REGISTER;
@@ -215,15 +215,15 @@ typedef struct CPU_68K
 	U32 CACHE_CONTROL;
 	U32 CACHE_ADDRESS;
 
-    char* INSTRUCTION_MODE;
-    char* TRACE_FLAG;
+    char INSTRUCTION_MODE;
+    char TRACE_FLAG;
 
-    unsigned int* PREVIOUS_DATA;
-    unsigned int* PREVIOUS_ADDRESS;
-    unsigned int* ADDRESS_RT_CHECK;
-    unsigned char* ERROR_ADDRESS;
-    unsigned char* ERROR_WRITE_MODE;
-    unsigned char* ERROR_PC;
+    unsigned int PREVIOUS_DATA;
+    unsigned int PREVIOUS_ADDRESS;
+    unsigned int ADDRESS_RT_CHECK;
+    unsigned char ERROR_ADDRESS;
+    unsigned char ERROR_WRITE_MODE;
+    unsigned char ERROR_PC;
     UNK* ERROR_JUMP;
 
     S32(*INTERRUPT_CALLBACK)(unsigned INTERRUPT);
@@ -250,10 +250,10 @@ typedef struct CPU_68K
     void(*SET_FC_CALLBACK)(unsigned* NEW_FC);
     void(*INSTR_HOOK)(unsigned* PC);
 
-    unsigned int* ADDRESS_MASK;
-    unsigned int* SR_MASK;
+    unsigned int ADDRESS_MASK;
+    unsigned int SR_MASK;
 
-    unsigned int** RESET_MODE;
+    unsigned int RESET_MODE;
 
     CPU_68K_MEMORY MEMORY_MAP[256];
 
@@ -306,69 +306,69 @@ typedef enum CPU_68K_FLAGS
 
 } CPU_68K_FLAGS;
 
-#define 		M68K_REG_DA				CPU->DATA_REGISTER
-#define			M68K_REG_D				CPU->DATA_REGISTER
-#define			M68K_REG_A				(CPU->DATA_REGISTER + 8)
-#define			M68K_REG_SR				CPU->STATUS_REGISTER
-#define			M68K_REG_PPC			CPU->PREVIOUS_PC
-#define			M68K_REG_PC				CPU->PC
-#define			M68K_REG_SP				CPU->STACK_POINTER
-#define			M68K_REG_USP			CPU->USER_STACK
-#define			M68K_REG_ISP			CPU->INTERRUPT_SP
-#define			M68K_REG_MSP			CPU->MASTER_SP
-#define			M68K_REG_BASE		    CPU->REGISTER_BASE
-#define			M68K_REG_VBR			CPU->VBR
-#define			M68K_REG_SFC			CPU->SOURCE_FUNCTION_COUNTER
-#define			M68K_REG_DFC			CPU->DEST_FUNCTION_COUNTER
-#define			M68K_REG_CACR			CPU->CACHE_CONTROL
-#define			M68K_REG_CAAR			CPU->CACHE_ADDRESS
-#define			M68K_REG_IR				CPU->INDEX_REGISTER
-#define 		M68K_REG_FPR			CPU->FPR
-#define			M68K_REG_FPCR			CPU->FPCR
-#define			M68K_REG_FPSR			CPU->FPSR
-#define			M68K_REG_FPIAR			CPU->FPIAR
+#define 		M68K_REG_DA				CPU.DATA_REGISTER
+#define			M68K_REG_D				CPU.DATA_REGISTER
+#define			M68K_REG_A				(CPU.DATA_REGISTER + 8)
+#define			M68K_REG_SR				CPU.STATUS_REGISTER
+#define			M68K_REG_PPC			CPU.PREVIOUS_PC
+#define			M68K_REG_PC				CPU.PC
+#define			M68K_REG_SP				CPU.STACK_POINTER
+#define			M68K_REG_USP			CPU.USER_STACK
+#define			M68K_REG_ISP			CPU.INTERRUPT_SP
+#define			M68K_REG_MSP			CPU.MASTER_SP
+#define			M68K_REG_BASE		    CPU.REGISTER_BASE
+#define			M68K_REG_VBR			CPU.VBR
+#define			M68K_REG_SFC			CPU.SOURCE_FUNCTION_COUNTER
+#define			M68K_REG_DFC			CPU.DEST_FUNCTION_COUNTER
+#define			M68K_REG_CACR			CPU.CACHE_CONTROL
+#define			M68K_REG_CAAR			CPU.CACHE_ADDRESS
+#define			M68K_REG_IR				CPU.INDEX_REGISTER
+#define 		M68K_REG_FPR			CPU.FPR
+#define			M68K_REG_FPCR			CPU.FPCR
+#define			M68K_REG_FPSR			CPU.FPSR
+#define			M68K_REG_FPIAR			CPU.FPIA
 
-#define  		M68K_FLAG_T0			CPU->T0_FLAG
-#define			M68K_FLAG_T1			CPU->T1_FLAG
-#define			M68K_FLAG_S				CPU->S_FLAG
-#define			M68K_FLAG_M				CPU->M_FLAG
-#define			M68K_FLAG_X				CPU->X_FLAG
-#define			M68K_FLAG_N				CPU->N_FLAG
-#define			M68K_FLAG_Z				CPU->Z_FLAG
-#define			M68K_FLAG_V				CPU->V_FLAG
-#define			M68K_FLAG_C				CPU->C_FLAG
-#define			M68K_FLAG_INT_LVL		CPU->INT_LEVEL
-#define			M68K_CPU_STOPPED		CPU->CPU_STOPPED
+#define  		M68K_FLAG_T0			CPU.T0_FLAG
+#define			M68K_FLAG_T1			CPU.T1_FLAG
+#define			M68K_FLAG_S				CPU.S_FLAG
+#define			M68K_FLAG_M				CPU.M_FLAG
+#define			M68K_FLAG_X				CPU.X_FLAG
+#define			M68K_FLAG_N				CPU.N_FLAG
+#define			M68K_FLAG_Z				CPU.Z_FLAG
+#define			M68K_FLAG_V				CPU.V_FLAG
+#define			M68K_FLAG_C				CPU.C_FLAG
+#define			M68K_FLAG_INT_LVL		CPU.INT_LEVEL
+#define			M68K_CPU_STOPPED		CPU.CPU_STOPPED
 
-#define         M68K_CYC_REMAIN         CPU->REMAINING_CYCLES
-#define			M68K_CYC_EXCE			CPU->CYCLE_EXCEPTION
-#define 		M68K_CYCLE				CPU->INSTRUCTION_CYCLES
-#define         M68K_RESET_LVL          CPU->RESET_MODE
-#define         M68K_RESET_CYCLES       CPU->RESET_CYCLES
+#define         M68K_CYC_REMAIN         CPU.REMAINING_CYCLES
+#define			M68K_CYC_EXCE			CPU.CYCLE_EXCEPTION
+#define 		M68K_CYCLE				CPU.INSTRUCTION_CYCLES
+#define         M68K_RESET_LVL          CPU.RESET_MODE
+#define         M68K_RESET_CYCLES       CPU.RESET_CYCLES
 
-#define         M68K_INT_ACK            CPU->INT_ACK_CALLBACK
-#define         M68K_RESET_ACK          CPU->RESET_CALLBACK
-#define         M68K_PC_CHANGED         CPU->PC_CHANGED_CALLBACK
-#define         M68K_SET_FC_ACK         CPU->SET_FC_CALLBACK
-#define         M68K_INSTR_HOOK         CPU->INSTR_HOOK
+#define         M68K_INT_ACK            CPU.INT_ACK_CALLBACK
+#define         M68K_RESET_ACK          CPU.RESET_CALLBACK
+#define         M68K_PC_CHANGED         CPU.PC_CHANGED_CALLBACK
+#define         M68K_SET_FC_ACK         CPU.SET_FC_CALLBACK
+#define         M68K_INSTR_HOOK         CPU.INSTR_HOOK
 
-#define         M68K_ADDRESS_MASK       CPU->ADDRESS_MASK
-#define         M68K_SR_MASK            CPU->SR_MASK
+#define         M68K_ADDRESS_MASK       CPU.ADDRESS_MASK
+#define         M68K_SR_MASK            CPU.SR_MASK
 
-#define         M68K_MEMORY_DATA        CPU->MEMORY_DATA
-#define         M68K_MEMORY_ADDRESS     CPU->MEMORY_ADDRESS
-#define         M68K_MEMORY_PTR         CPU->MEMORY_POINTER
+#define         M68K_MEMORY_DATA        CPU.MEMORY_DATA
+#define         M68K_MEMORY_ADDRESS     CPU.MEMORY_ADDRESS
+#define         M68K_MEMORY_PTR         CPU.MEMORY_POINTER
 
-#define         M68K_PRV_DATA           CPU->PREVIOUS_DATA
-#define         M68K_PRV_ADDR           CPU->PREVIOUS_ADDRESS
-#define         M68K_TRA_ADDR           CPU->ADDRESS_RT_CHECK
+#define         M68K_PRV_DATA           CPU.PREVIOUS_DATA
+#define         M68K_PRV_ADDR           CPU.PREVIOUS_ADDRESS
+#define         M68K_TRA_ADDR           CPU.ADDRESS_RT_CHECK
 
-#define         M68K_MEMORY_MAP          CPU->MEMORY_MAP
-#define         M68K_MEMORY_BASE         CPU_MEMORY->MEMORY_BASE
-#define         M68K_MEMORY_READ_8       CPU_MEMORY->MEMORY_READ_8
-#define         M68K_MEMORY_READ_16      CPU_MEMORY->MEMORY_READ_16
-#define         M68K_MEMORY_WRITE_8      CPU_MEMORY->MEMORY_WRITE_8
-#define         M68K_MEMORY_WRITE_16     CPU_MEMORY->MEMORY_WRITE_16
+#define         M68K_MEMORY_MAP          CPU.MEMORY_MAP
+#define         M68K_MEMORY_BASE         CPU_MEMORY.MEMORY_BASE
+#define         M68K_MEMORY_READ_8       CPU_MEMORY.MEMORY_READ_8
+#define         M68K_MEMORY_READ_16      CPU_MEMORY.MEMORY_READ_16
+#define         M68K_MEMORY_WRITE_8      CPU_MEMORY.MEMORY_WRITE_8
+#define         M68K_MEMORY_WRITE_16     CPU_MEMORY.MEMORY_WRITE_16
 
 
 
@@ -394,5 +394,5 @@ void M68K_BUILD_OPCODE_TABLE(void);
 /*							        68000 MISC.							         */
 /*===============================================================================*/
 
-static CPU_68K* CPU;
+static CPU_68K CPU;
 #endif
