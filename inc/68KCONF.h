@@ -43,11 +43,11 @@
 #define USE_CYCLES
 #else
 
-#define 	M68K_ADD_CYCLES(VALUE)				(*(int*)M68K_CYC_REMAIN) += (VALUE)
-#define		M68K_USE_CYCLES(VALUE)				(*(int*)M68K_CYC_REMAIN) -= (VALUE)
-#define		M68K_SET_CYCLES(VALUE)				(*(int*)M68K_CYC_REMAIN) = VALUE
-#define		M68K_GET_CYCLES()					(*(int*)M68K_CYC_REMAIN)
-#define		M68K_ALL_CYCLES()					(*(int*)M68K_CYC_REMAIN) %= M68K_CYCLE[M68K_REG_IR]
+#define 	M68K_ADD_CYCLES(VALUE)				M68K_CYC_REMAIN += (*VALUE)
+#define		M68K_USE_CYCLES(VALUE)				M68K_CYC_REMAIN -= (VALUE)
+#define		M68K_SET_CYCLES(VALUE)				M68K_CYC_REMAIN = VALUE
+#define		M68K_GET_CYCLES()					M68K_CYC_REMAIN
+#define		M68K_ALL_CYCLES()					M68K_CYC_REMAIN %= M68K_CYCLE[M68K_REG_IR]
 
 #endif
 
@@ -55,20 +55,19 @@
 #define 	M68K_MASK_OUT_ABOVE_8(A)            ((A) & 0xFF)
 #define 	M68K_MASK_OUT_ABOVE_16(A)           ((A) & 0xFFFF)
 #define 	M68K_MASK_OUT_ABOVE_32(A)           ((A) & 0xFFFFFFF)
-#define     M68K_RETURN_ADDRESS(ADDRESS)        ((*ADDRESS) & 0xFFFFFFFFFF)
+#define     M68K_RETURN_ADDRESS(ADDRESS)        (ADDRESS & 0xFFFFFFFFFF)
 
 /*===============================================================================*/
 /*							68000 CALLBACKS						     			 */
 /*===============================================================================*/
 
-U8 M68K_VECTOR_TABLE[5][256];
+extern U8 M68K_VECTOR_TABLE[5][256];
 int M68K_SET_INT_CALLBACK(int* LEVEL);
 void M68K_DEFAULT_INSTR_CALLBACK(void);
-void M68K_SET_FUNC_CALLBACK(unsigned* CALLBACK);
+void M68K_SET_FUNC_CALLBACK(unsigned CALLBACK);
 void M68K_SET_INSTR_CALLBACK(void(*CALLBACK), unsigned PC);
 void M68K_SET_MOVE_IRQ_INT(void);
 U16 M68K_FETCH_INSTR();
-void(*M68K_OPCODE_JUMP_TABLE[0x10000])(void);
 
 /*===============================================================================*/
 /*							68000 READ AND WRITE							     */
