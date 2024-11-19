@@ -150,13 +150,13 @@ int M68K_EXEC()
     /* ASSUME THAT THE CLOCK CYCLES HAVE BEEN RESET UPON INITIAL BOOT */
 
     int CYCLES = 0;
-    unsigned* CYCLE_COUNT = 0;
+    unsigned CYCLE_COUNT = 0;
     int INDEX = 0;
 
     if(M68K_RESET_CYCLES)
     {
         CYCLE_COUNT = M68K_RESET_CYCLES;
-		return *CYCLE_COUNT;
+		return CYCLE_COUNT;
     }
 
     /* SET THE AVAILABLE CLOCK CYCLES */
@@ -167,7 +167,7 @@ int M68K_EXEC()
 
     if(!M68K_CPU_STOPPED)
     {
-		memcpy(M68K_REG_PC, &M68K_REG_PPC, 0);
+		assert(M68K_REG_PC);
 
         /* RECORD THE PREVIOUS STATE FOUND IN ANY RESPECTIVE DATA OR ADDRESS REGISTER */
 
