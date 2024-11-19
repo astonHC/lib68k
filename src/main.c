@@ -12,11 +12,13 @@
 
 static LIB_BASE* LIB68K;
 
+#define         PC_MAX_VALUE            0x10000
+
 int main(int argc, char** argv)
 {
     printf("HARRY CLARK - MOTOROLA 680x0 EMULATOR\n");
     
-    if(argc > 1)
+    if(argc < 1)
     {
         char* INDEX;
         strncpy(LIB68K->OUTPUT_PATH, argv[1], sizeof(LIB68K->OUTPUT_PATH));
@@ -27,5 +29,12 @@ int main(int argc, char** argv)
         {
             *INDEX = '/';
         }
-    }    
+    }
+
+    printf("Setting 68K Program Counter\n");
+    M68K_SET_REGISTERS(M68K_REG_PC, PC_MAX_VALUE);   
+    printf("68K Program Counter defined with Value: %d\n", PC_MAX_VALUE);
+
+    return 0;
+ 
 }
