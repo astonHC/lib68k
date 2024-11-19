@@ -46,6 +46,7 @@
     #define         OPCODE_DEF_MASK                 (0xFF00 >> 0x0000)
     #define         OPCODE_BYTE_MASK                (0xF1F8 >> 0x0000)
 
+    #define         OPCODE_BIT_MASK                 0xFF
     #define         OPCODE_MAX                      0x10000
 
     typedef struct OPCODE
@@ -71,6 +72,8 @@
     #define     OPCODE_BITS         OPCODE_BASE.BITS
     #define     OPCODE_PROCESS      OPCODE_BASE.PROCESS
     #define     OPCODE_EA           OPCODE_BASE.EA
+    #define     OPCODE_HANDLE       OPCODE_BASE.HANDLER
+    #define     OPCODE_CYCLES       OPCODE_BASE.CYCLES
 
 void M68K_OP_1010(void);
 void M68K_OP_1111(void);
