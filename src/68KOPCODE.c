@@ -14,6 +14,8 @@
 OPCODE* OPCODE_BASE;
 OPCODE* FIND_OPCODE(char* NAME, int SIZE);
 void(*M68K_OPCODE_JUMP_TABLE[0x10000])(void);
+static int CYCLE_INDEX[OPCODE_MAX];
+
 
 /* EXCEPTION HANDLER FOR A-LINE INSTRUCTION HANDLERS */
 /* DISCERN THE CURRENT EXCEPTION BEING FED INTO PC AND APPEND THAT THROUGH A JMP */ 
@@ -383,36 +385,13 @@ M68K_MAKE_OPCODE(BCC, 8, 0, 0)
 
 void M68K_BUILD_OPCODE_TABLE(void)
 {
-    int* MASK_LEVEL = 0;
-    int INDEX = 0;
-
-    switch (*MASK_LEVEL)
+    for(int INDEX = 0; INDEX < OPCODE_MAX; INDEX++)
     {
-        case OPCODE_ILLEGAL_MASK:
-            M68K_OPCODE_JUMP_TABLE[INDEX] = NULL;
-            M68K_CYCLE[INDEX] += 4;
-            break;
+        // DEFAULT TO ILLEGAL FOR SAFE MEMORY CHECKS
 
-        case OPCODE_DEF_MASK:
-            M68K_OPCODE_JUMP_TABLE[INDEX] = NULL;
-            M68K_CYCLE[INDEX] += 4;
-            break;
-
-        case OPCODE_BYTE_MASK:
-            *M68K_CYCLE += *OPCODE_NAME | INDEX << 9;
-
-            M68K_OPCODE_JUMP_TABLE[*OPCODE_BASE->NAME | INDEX] = OPCODE_BASE->HANDLER;
-            M68K_CYCLE[INDEX] += 4;
-            break; 
-
-    
-
-        default:
-            break;
+        CYCLE_INDEX[INDEX] = 4;
 
     }
-
-    free(OPCODE_BASE);
 }
 
 /* =============================================== */
