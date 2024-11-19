@@ -383,7 +383,6 @@ M68K_MAKE_OPCODE(BCC, 8, 0, 0)
 
 void M68K_BUILD_OPCODE_TABLE(void)
 {
-    struct OPCODE* OP = malloc(sizeof(OPCODE));
     int* MASK_LEVEL = 0;
     int INDEX = 0;
 
@@ -402,7 +401,7 @@ void M68K_BUILD_OPCODE_TABLE(void)
         case OPCODE_BYTE_MASK:
             *M68K_CYCLE += *OPCODE_NAME | INDEX << 9;
 
-            M68K_OPCODE_JUMP_TABLE[*OP->NAME | INDEX] = OP->HANDLER;
+            M68K_OPCODE_JUMP_TABLE[*OPCODE_BASE->NAME | INDEX] = OPCODE_BASE->HANDLER;
             M68K_CYCLE[INDEX] += 4;
             break; 
 
@@ -413,7 +412,7 @@ void M68K_BUILD_OPCODE_TABLE(void)
 
     }
 
-    free(OP);
+    free(OPCODE_BASE);
 }
 
 /* =============================================== */
