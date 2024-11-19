@@ -13,6 +13,7 @@
 static LIB_BASE* LIB68K;
 
 #define         PC_MAX_VALUE            0x10000
+#define         M68K_REG_NUM            0
 
 int main(int argc, char** argv)
 {
@@ -31,9 +32,23 @@ int main(int argc, char** argv)
         }
     }
 
+    printf("Initialising 68000\n");
+    M68K_INIT();
+    M68K_EXEC();
+    printf("68000 is running: %p\n", (void*)&CPU);
+
+    printf("====================================================\n");
+
     printf("Setting 68K Program Counter\n");
     M68K_SET_REGISTERS(M68K_REG_PC, PC_MAX_VALUE);   
     printf("68K Program Counter defined with Value: %d\n", PC_MAX_VALUE);
+
+    printf("====================================================\n");
+
+    printf("Setting 68K Data Register\n");
+    M68K_GET_REGISTERS(&CPU, M68K_REG_D[M68K_REG_NUM]);
+    printf("68K Data Register 0x%d Set\n", M68K_REG_NUM);
+
 
     return 0;
  
