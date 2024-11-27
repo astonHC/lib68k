@@ -30,6 +30,13 @@ int main(int argc, char** argv)
         {
             *INDEX = '/';
         }
+
+        // EVALUATE THE LENGTH OF THE NEW OUTPUT PATH OF THE FILE INPUT
+
+        if(LIB68K->OUTPUT_PATH[strlen(LIB68K->OUTPUT_PATH) - 1 ] != '/') 
+        {
+            
+        }
     }
 
     printf("Initialising 68000\n");
@@ -37,7 +44,6 @@ int main(int argc, char** argv)
     M68K_EXEC();
     printf("68000 is running: %p\n", (void*)&CPU);
 
-    printf("====================================================\n");
 
     printf("Setting 68K Program Counter\n");
     M68K_SET_REGISTERS(M68K_REG_PC, PC_MAX_VALUE);   
