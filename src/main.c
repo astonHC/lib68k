@@ -11,6 +11,7 @@
 #include "68KOPCODE.h"
 
 static LIB_BASE* LIB68K;
+
 #define         PC_MAX_VALUE            0x10000
 
 /* THE MAIN ENCOMPASSING FUNCTION TO PARSE THE CONTENTS PROVIDED THROUGH THE ARGS */
@@ -60,15 +61,12 @@ void PROC_FILE(char* FILENAME)
         fprintf(stderr, "Couldn't find valid Opcode at Line %d: %s\n", LINE_INDEX, OPCODE_BASE);
         exit(EXIT_FAILURE);
     }
-    
 }
 
 OPCODE* FIND_OPCODE(char* NAME, int SIZE, char* PROC, char* EA)
 {
 
 }
-
-
 
 int main(int argc, char** argv)
 {
@@ -115,6 +113,5 @@ int main(int argc, char** argv)
     printf("68K Stack Pointer defined with Value: %d\n", &M68K_REG_SP);
 
 
-    return 0;
- 
+    return 0; 
 }
