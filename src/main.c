@@ -17,7 +17,9 @@ static LIB_BASE* LIB68K;
 
 int main(int argc, char** argv)
 {
+    printf("====================================================\n");
     printf("HARRY CLARK - MOTOROLA 680x0 EMULATOR\n");
+    printf("====================================================\n");
     
     if(argc < 1)
     {
@@ -51,9 +53,9 @@ int main(int argc, char** argv)
 
     printf("====================================================\n");
 
-    printf("Setting 68K Data Register\n");
-    M68K_GET_REGISTERS(&CPU, M68K_REG_D[M68K_REG_NUM]);
-    printf("68K Data Register 0x%d Set\n", M68K_REG_NUM);
+    printf("Setting 68K Stack Pointer\n");
+    M68K_GET_REGISTERS(&CPU, M68K_REG_D[M68K_REG_SP]);
+    printf("68K Stack Pointer defined with Value: %d\n", &M68K_REG_SP);
 
 
     return 0;
