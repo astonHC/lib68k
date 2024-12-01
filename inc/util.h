@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 #if defined(USE_UTIL)
     #define USE_UTIL
@@ -68,6 +69,7 @@
 
     typedef struct LIB_BASE
     {
+        char INPUT_FILE[MAX_PATH_BUFFER];
         char OUTPUT_PATH[MAX_DIR_BUFFER];
         char* FILENMAE[MAX_PATH_BUFFER * 2];
         char* SECTION_ID[MAX_LINE_BUFFER + 1];
@@ -76,6 +78,17 @@
         int OPCODE_HANDLER_READ;
 
     } LIB_BASE;
+
+
+/*====================================================*/
+/*              FUNCTION DECLARATIVES                 */
+/*====================================================*/
+
+
+static FILE* INPUT;
+
+void PROC_FILE(char* FILENAME);
+OPCODE* FIND_OPCODE(char* NAME, int SIZE, char* PROC, char* EA);
 
 #endif
 #endif
