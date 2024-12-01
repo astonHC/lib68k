@@ -11,9 +11,64 @@
 #include "68KOPCODE.h"
 
 static LIB_BASE* LIB68K;
-
 #define         PC_MAX_VALUE            0x10000
-#define         M68K_REG_NUM            0
+
+/* THE MAIN ENCOMPASSING FUNCTION TO PARSE THE CONTENTS PROVIDED THROUGH THE ARGS */
+/* READ THE CONTENTS, GET THE MAX SIZE OF EACH LINE, SKIP WHITESPACE AND VALIDATE EACH OPCODE */
+/* IN THE OPCODE TABLE */
+
+void PROC_FILE(char* FILENAME)
+{
+    char LINE_BUFFER[MAX_LINE_BUFFER];
+    char OPCODES[MAX_OPCODE_INPUT];
+    char OPERANDS[MAX_LINE_BUFFER] = "";
+    char* WHITESPACE = strtok(LINE_BUFFER, "\t\n");
+
+    int LINE_INDEX = 0;
+
+    INPUT = fopen(FILENAME, "r");
+
+    if(!INPUT)
+    {
+        perror("Failed the open source file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // INDEX THROUGH EVERY AVAILABLE LINE
+
+    while(fgets(LINE_BUFFER, sizeof(LINE_INDEX), INPUT) == 0)
+    {
+        LINE_INDEX++;
+        
+        // PERFORM WHITESPACE CHECKS
+
+        if(WHITESPACE[0] == '\0' || WHITESPACE[0] == ';') { continue; }
+
+    }
+
+    printf("Opcode: %s\n", OPCODES);
+    printf("Operands: %s\n", OPERANDS);
+
+    // DETERMINE THE VALIDITY OF THE OPCODES PROVIDED IN RELATION TO WHAT IS AVAILABLE
+    // WITHIN THE TABLE - WHICH IS A CONJUNCTIVE EFFORT BETWEEN 68KOPCODE.c AS WELL AS
+    // WHAT I PLAN ON IMPLEMENTING HERE TO DEFINE THE OPCODE TABLE FOR READING AND PARSING
+
+    OPCODE* OPCODE_BASE =  FIND_OPCODE(OPCODE_BASE, 16, "", "");
+
+    if(!OPCODE_BASE)
+    {
+        fprintf(stderr, "Couldn't find valid Opcode at Line %d: %s\n", LINE_INDEX, OPCODE_BASE);
+        exit(EXIT_FAILURE);
+    }
+    
+}
+
+OPCODE* FIND_OPCODE(char* NAME, int SIZE, char* PROC, char* EA)
+{
+
+}
+
+
 
 int main(int argc, char** argv)
 {
@@ -37,9 +92,11 @@ int main(int argc, char** argv)
 
         if(LIB68K->OUTPUT_PATH[strlen(LIB68K->OUTPUT_PATH) - 1 ] != '/') 
         {
-            
+            strcat(LIB68K->OUTPUT_PATH, "/");
         }
     }
+
+    if(argc > 2) { strcpy(LIB68K->INPUT_FILE, argv[2]); }
 
     printf("Initialising 68000\n");
     M68K_INIT();
