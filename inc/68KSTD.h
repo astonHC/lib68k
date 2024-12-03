@@ -21,8 +21,17 @@
     do                                                              \ 
     {                                                               \
         fprintf(stderr, "Error: " MESSAGE "\n", ##__VA_ARGS__);     \
-        exit(EXIT_FAILURE);                                         \
+        exit(1);                                                    \
                                                                     \
+    } while (0)
+
+
+    #define M68K_PERROR_EXIT(MESSAGE, ...)                              \
+    do                                                                  \ 
+    {                                                                   \
+        perror("Error: " MESSAGE "\n", ##__VA_ARGS__);                  \
+        exit(1);                                                        \
+                                                                        \
     } while (0)
 
 
