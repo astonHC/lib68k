@@ -80,7 +80,7 @@ void M68K_OP_1111(void);
 
 int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE);
 int CHECK_OPCODE_LENGTH(char* SRC, char* DEST, int MAX);
-int GET_OP_CYCLES(OPCODE* OPCODE_BASE, int EA_MODE, int CPU_TYPE);
+int GET_OP_CYCLES(OPCODE* OPCODE_BASE, int EA_MODE, int* CPU_TYPE);
 
 #endif
 #endif
