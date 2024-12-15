@@ -82,5 +82,7 @@ int EXTRACT_OPCODE(char* SRC, char* NAME, int* SIZE);
 int CHECK_OPCODE_LENGTH(char* SRC, char* DEST, int MAX);
 int GET_OP_CYCLES(OPCODE* OPCODE_BASE, int EA_MODE, int* CPU_TYPE);
 
+OPCODE* FIND_OPCODE(char* NAME, int SIZE);
+
 #endif
 #endif
