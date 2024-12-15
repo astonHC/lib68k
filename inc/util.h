@@ -49,7 +49,7 @@
     /* IND = INDEX */
     /* =========================================================== */
 
-    typedef enum M68K_EA
+    typedef enum M68K_EA_TYPES
     {
         EA_MODE_NONE,
         EA_MODE_AI,
@@ -65,7 +65,7 @@
         EA_MODE_PCIND,
         EA_MODE_I
 
-    } M68K_EA;
+    } M68K_EA_TYPES;
 
     typedef struct LIB_BASE
     {
@@ -84,11 +84,9 @@
 /*              FUNCTION DECLARATIVES                 */
 /*====================================================*/
 
-
 static FILE* INPUT;
 
 void PROC_FILE(char* FILENAME);
-OPCODE* FIND_OPCODE(char* NAME, int SIZE, char* PROC, char* EA);
 
 #endif
 #endif
